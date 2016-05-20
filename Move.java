@@ -17,11 +17,13 @@ public abstract class Move {
 	private String description;
 	private String name;
 	private int pp;
+	private int type; //fire, grass, water
 	
-	public Move(String description, String name, int pp) {
+	public Move(String description, String name, int pp, int type) {
 		this.description = description;
 		this.name = name;
 		this.pp = pp;
+		this.type = type;
 	}
 	
 	public abstract void execMove();
