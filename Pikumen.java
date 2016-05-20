@@ -25,10 +25,13 @@ public class Pikumen {
 	private int startHp;
 	private int startAtk;
 	private int startDef;
-	private int[] moves;
+	private Move[] moves;
+	private float spdPLvl;
+	private int startSpd;
 	
-	public Pikamen(String name, int level, int exp, Image image, float hpPLvl, float atkPLvl, 
-					float defPLvl, int startHp, int startAtk, int startDef, int[] startingMoves){
+	public Pikumen(String name, int level, int exp, Image image, float hpPLvl, float atkPLvl, 
+					float defPLvl, int startHp, int startAtk, int startDef, int[] startingMoves,
+					float spdPLvl, int startSpd){
 		this.name = name;
 		this.level = level;			// or does level = a certain point of experience?
 		this.exp = exp;
@@ -36,6 +39,11 @@ public class Pikumen {
 		this.hpPLvl = hpPLvl;
 		this.atkPLvl = atkPLvl;
 		this.defPLvl = defPLvl;
+		this.spdPLvl = spdPLvl;
+		this.startHp = startHp;
+		this.startAtk = startAtk;
+		this.startDef = startDef;
+		this.startSpd = startSpd;
 		nickname = name;
 		moves = startingMoves;
 	}
@@ -74,12 +82,3 @@ public class Pikumen {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-}
