@@ -1,28 +1,21 @@
-package Pikumen;
-import java.util.ArrayList;
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Vector2f;
+package main;
 
 public class StatLowerMove extends Move {
+	private int stat;//which stat to raise
 	private float accuracy;
-	private int stat;
-	private float amountLower;
-	public StatLowerMove(String description, String name, int pp, int stat, float amountLower) {
-		this.description = description;
-		this.name = name;
-		this.type = type;
-		this.pp = pp;
-		this.accuracy = 1;
-		this.type = type;
+	private int amountLower;
+	public StatLowerMove(String name, String description, int pp, int type, int stat, float accuracy, int amountLower) {
+		super(name, description, pp, type);
+		this.stat = stat;
+		this.accuracy = accuracy;
 		this.amountLower = amountLower;
+	}
+	
+	public String toString(){
+		return(name + " " + description + " " + amountLower + " " + accuracy + " " + stat);
+	}
+	
+	public void execMove(){
+		return;
 	}
 }
