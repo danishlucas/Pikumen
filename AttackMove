@@ -1,4 +1,4 @@
-package Pikumen;
+package Pikamen;
 import java.util.ArrayList;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -17,21 +17,12 @@ public class AttackMove extends Move {
 	private float accuracy;
 	private int type;
 	public AttackMove(String description, String name, int pp, int type, int damage, float accuracy) {
-		this.description = description;
-		this.name = name;
-		this.type = type;
-		this.pp = pp;
+		super(description, name, pp, type);
 		this.damage = damage;
 		this.accuracy = accuracy;
 		this.type = 0;
 	}
-	public AttackMove(String description, String name, int pp, int type, int damage, float accuracy, int type) {
-		this.description = description;
-		this.name = name;
-		this.type = type;
-		this.pp = pp;
-		this.damage = damage;
-		this.accuracy = accuracy;
-		this.type = type;
+	public void execMove() {
+		
 	}
 }
