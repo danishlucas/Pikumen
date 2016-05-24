@@ -1,0 +1,14 @@
+package main;
+
+public class MoveTest {
+	public static void main(String[] args) {
+		Move move = new Move("Attack", "Move", 10, 1);
+		System.out.println(move.toString());
+		Move attackMove = new AttackMove("Attack Move", "Attacks enemy", 10, 1, 10, 1);
+		System.out.println(attackMove.toString());
+		Move statLower = new StatLowerMove("Stat Lower", "Lowers a stat", 10, 1, 1, 1, 5);
+		System.out.println(statLower.toString());
+		Move statRaise = new StatRaiseMove("Stat Raise", "Raises a stat", 10, 1, 1, 5);
+		System.out.println(statRaise.toString());
+	}
+}
