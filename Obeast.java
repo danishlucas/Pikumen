@@ -24,7 +24,7 @@ public class Obeast extends Pikumen {
 	private Move special;
 
 	public Obeast(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Obeast", level, exp, new Image("res/Obeast.jpeg"), 50, 2, 
+		super("Obeast", level, exp, new Image("res/Obeast.jpg"), 50, 2, 
 				3, 50, 5, 9, new Move[4],
 				1, 7);
 	}

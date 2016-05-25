@@ -24,7 +24,7 @@ public class Baconeg extends Pikumen {
 	private Move special;
 
 	public Baconeg(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Baconeg", level, exp, new Image("res/Baconeg.jpeg"), 25, 3, 
+		super("Baconeg", level, exp, new Image("res/Baconeg.jpg"), 25, 3, 
 				2, 35, 6, 4, new Move[4],
 				2, 4);
 	}

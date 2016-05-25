@@ -24,7 +24,7 @@ public class Teef extends Pikumen {
 	private Move special;
 
 	public Teef(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Teef", level, exp, new Image("res/Teef.jpeg"), 20, 2, 
+		super("Teef", level, exp, new Image("res/Teef.jpg"), 20, 2, 
 				4, 35, 5, 10, new Move[4],
 				2, 10);
 		

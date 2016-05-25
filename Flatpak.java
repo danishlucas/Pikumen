@@ -24,7 +24,7 @@ public class Flatpak extends Pikumen {
 	private Move special;
 
 	public Flatpak(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Flatpak", level, exp, new Image("res/Flatpak.jpeg"), 20, 1, 
+		super("Flatpak", level, exp, new Image("res/Flatpak.jpg"), 20, 1, 
 				3, 20, 4, 4, new Move[4],
 				2, 3);
 	}

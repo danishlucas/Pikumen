@@ -24,7 +24,7 @@ public class punctuation extends Pikumen {
 	private Move special;
 
 	public punctuation(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("?!?!", level, exp, new Image("res/punctuation.jpeg"), (int)(Math.random()*15 + 10), (int)(Math.random() * 4 + 2), 
+		super("?!?!", level, exp, new Image("res/punctuation.jpg"), (int)(Math.random()*15 + 10), (int)(Math.random() * 4 + 2), 
 				(int)(Math.random()* 2 + 1), 26, 7, 6, new Move[4],
 				(int)(Math.random() * 4 + 2), 6);
 	}

@@ -31,14 +31,15 @@ public class Pikumen {
 	private float spdPLvl;
 	private int startSpd;
 	private int currHp;
+	private int maxHp;
 	
 	public Pikumen(String name, int level, int exp, Image image, float hpPLvl, float atkPLvl, 
 					float defPLvl, int startHp, int startAtk, int startDef, Move[] startingMoves,
-					float spdPLvl, int startSpd){
+					float spdPLvl, int startSpd) throws SlickException{
 		this.name = name;
 		this.level = level;			// or does level = a certain point of experience?
 		this.exp = exp;
-		this.image = image;
+		this.image = new Image("res/Toof.jpg");
 		this.hpPLvl = hpPLvl;
 		this.atkPLvl = atkPLvl;
 		this.defPLvl = defPLvl;
@@ -47,7 +48,8 @@ public class Pikumen {
 		this.startAtk = startAtk;
 		this.startDef = startDef;
 		this.startSpd = startSpd;
-		this.currHp = (int) (startHp + hpPLvl * level);
+		this.maxHp =  (int) (startHp + hpPLvl * level);
+		this.currHp = maxHp;
 		nickname = name;
 		moves = startingMoves;
 	}
@@ -80,12 +82,35 @@ public class Pikumen {
 		return (int)(level * defPLvl + startDef);
 	}
 	
+	public int getCurrHp() {
+		return currHp;
+	}
+	
+	public void updateHp(int damage) {
+		currHp -=damage;
+	}
+	
+	public void fullHeal() {
+		currHp = maxHp;
+	}
+	
+	
 	public void executeAttack(int moveNum) {
 												// attacks
 	}
 	
-	public void drawIamge() {
+	public void drawImage() {
 		
+	}
+	
+	public void addExp(int addedExp){ // addedExp = level of defeated poke
+		exp += addedExp;
+		int toNext = 5 * level;
+		while(exp >= toNext) {
+			level++;
+			exp -= toNext;
+			toNext+=5;
+		}
 	}
 	
 	

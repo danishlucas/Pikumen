@@ -24,7 +24,7 @@ public class Dukburg extends Pikumen {
 	private Move special;
 
 	public Dukburg(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Dukburg", level, exp, new Image("res/Dukburg.jpeg"), 20, 3, 
+		super("Dukburg", level, exp, new Image("res/Dukburg.jpg"), 20, 3, 
 				2, 30, 3, 2, new Move[4],
 				2, 6);
 	}

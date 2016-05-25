@@ -24,7 +24,7 @@ public class Roadking extends Pikumen {
 	private Move special;
 
 	public Roadking(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Roadking", level, exp, new Image("res/Roadking.jpeg"), 20, 5, 
+		super("Roadking", level, exp, new Image("res/Roadking.jpg"), 20, 5, 
 				2, 20, 12, 4, new Move[4],
 				2, 6);
 	}

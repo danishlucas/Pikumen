@@ -24,7 +24,7 @@ public class Man extends Pikumen {
 	private Move special;
 
 	public Man(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Man", level, exp, new Image("res/Man.jpeg"), 10, 3, 
+		super("Man", level, exp, new Image("res/Man.jpg"), 10, 3, 
 				1, 20, 5, 3, new Move[4],
 				3, 4);
 	}

@@ -24,7 +24,7 @@ public class Threef extends Pikumen {
 	private Move special;
 
 	public Threef(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Threef", level, exp, new Image("res/Threef.jpeg"), 30, 3, 
+		super("Threef", level, exp, new Image("res/Threef.jpg"), 30, 3, 
 				4, 50, 6, 15, new Move[4],
 				2, 15);
 	}

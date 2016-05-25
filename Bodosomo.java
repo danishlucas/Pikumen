@@ -24,7 +24,7 @@ public class Bodosomo extends Pikumen {
 	private Move special;
 
 	public Bodosomo(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Bodosomo", level, exp, new Image("res/Bodosomo.jpeg"), 30, 2, 
+		super("Bodosomo", level, exp, new Image("res/Bodosomo.jpg"), 30, 2, 
 				4, 35, 7, 10, new Move[4],
 				3, 3);
 	}

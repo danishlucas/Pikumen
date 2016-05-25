@@ -24,7 +24,7 @@ public class qMark extends Pikumen {
 	private Move special;
 
 	public qMark(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("?", level, exp, new Image("res/qMark.jpeg"), 13, 3, 
+		super("?", level, exp, new Image("res/qMark.jpg"), 13, 3, 
 				2, 20, 4, 4, new Move[4],
 				3, 6);
 	}

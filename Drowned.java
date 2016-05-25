@@ -24,7 +24,7 @@ public class Drowned extends Pikumen {
 	private Move special;
 
 	public Drowned(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Drown'd", level, exp, new Image("res/Drown'd.jpeg"), 29, 2, 
+		super("Drown'd", level, exp, new Image("res/Drown'd.jpg"), 29, 2, 
 				4, 37, 7, 8, new Move[4],
 				2, 3);
 	}

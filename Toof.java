@@ -24,7 +24,7 @@ public class Toof extends Pikumen {
 	private Move special;
 
 	public Toof(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Toof", level, exp, new Image("res/Toof.jpeg"), 16, 2, 
+		super("Toof", level, exp, new Image("res/Toof.jpg"), 16, 2, 
 				3, 25, 3, 8, new Move[4],
 				2, 2);
 	}

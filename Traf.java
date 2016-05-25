@@ -24,7 +24,7 @@ public class Traf extends Pikumen {
 	private Move special;
 
 	public Traf(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Traf", level, exp, new Image("res/Traf.jpeg"), 20, 3, 
+		super("Traf", level, exp, new Image("res/Traf.jpg"), 20, 3, 
 				1, 50, 15, 15, new Move[4],
 				5, 10);
 	}

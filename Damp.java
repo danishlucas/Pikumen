@@ -24,7 +24,7 @@ public class Damp extends Pikumen {
 	private Move special;
 
 	public Damp(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Damp", level, exp, new Image("res/Damp.jpeg"), 18, 2, 
+		super("Damp", level, exp, new Image("res/Damp.jpg"), 18, 2, 
 				3, 20, 4, 4, new Move[4],
 				1, 3);
 	}

@@ -24,7 +24,7 @@ public class Nesthair extends Pikumen {
 	private Move special;
 
 	public Nesthair(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Nesthair", level, exp, new Image("res/Nesthair.jpeg"), 34, 3, 
+		super("Nesthair", level, exp, new Image("res/Nesthair.jpg"), 34, 3, 
 				3, 30, 15, 2, new Move[4],
 				5, 15);
 	}

@@ -24,7 +24,7 @@ public class Quakstak extends Pikumen {
 	private Move special;
 
 	public Quakstak(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Quakstak", level, exp, new Image("res/Quakstak.jpeg"), 30, 4, 
+		super("Quakstak", level, exp, new Image("res/Quakstak.jpg"), 30, 4, 
 				2, 40, 6, 2, new Move[4],
 				2, 8);
 	}

@@ -24,7 +24,7 @@ public class Wardroab extends Pikumen {
 	private Move special;
 
 	public Wardroab(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Wardroab", level, exp, new Image("res/Wardroab.jpeg"), 30, 2, 
+		super("Wardroab", level, exp, new Image("res/Wardroab.jpg"), 30, 2, 
 				5, 40, 4, 10, new Move[4],
 				2, 10);
 	}

@@ -24,7 +24,7 @@ public class Soaked extends Pikumen {
 	private Move special;
 
 	public Soaked(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Soak'd", level, exp, new Image("res/Soak'd.jpeg"), 23, 2, 
+		super("Soak'd", level, exp, new Image("res/Soak'd.jpg"), 23, 2, 
 				3, 26, 7, 8, new Move[4],
 				1, 6);
 	}

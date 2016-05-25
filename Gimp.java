@@ -24,7 +24,7 @@ public class Gimp extends Pikumen {
 	private Move special;
 
 	public Gimp(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Gimp", level, exp, new Image("res/Gimp.jpeg"), 20, 2, 
+		super("Gimp", level, exp, new Image("res/Gimp.jpg"), 20, 2, 
 				3, 20, 3, 8, new Move[4],
 				2, 4);
 	}

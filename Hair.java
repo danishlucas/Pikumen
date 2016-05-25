@@ -24,7 +24,7 @@ public class Hair extends Pikumen {
 	private Move special;
 
 	public Hair(int level, int exp, Move[] startingMoves) throws SlickException {
-		super("Hair", level, exp, new Image("res/Hair.jpeg"), 19, 2, 
+		super("Hair", level, exp, new Image("res/Hair.jpg"), 19, 2, 
 				2, 20, 4, 4, new Move[4],
 				3, 6);
 	}

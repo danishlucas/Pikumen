@@ -24,7 +24,7 @@ public class Fullenglish extends Pikumen {
 	private Move special;
 
 	public Fullenglish(int level, int exp, Move[] startingMoves, Move special) throws SlickException {
-		super("Fullenglish", level, exp, new Image("res/Fullenglish.jpeg"), 35, 5, 
+		super("Fullenglish", level, exp, new Image("res/Fullenglish.jpg"), 35, 5, 
 				2, 35, 10, 4, new Move[4],
 				2, 8);
 	}
