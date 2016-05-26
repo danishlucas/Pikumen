@@ -10,10 +10,10 @@ public class AttackMove extends Move {
 	}
 
 	public String toString(){
-		return (name + " " + description + " " + damage + " " + accuracy + " " + pp);
+		return (name + ", " + description + ", " + damage + ", " + accuracy + ", " + pp);
 	}
 	
 	public void execMove(){
-		return; //to be written later
+		return;
 	}
 }
