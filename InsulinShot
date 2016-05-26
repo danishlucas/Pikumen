@@ -1,0 +1,7 @@
+package main;
+
+public class InsulinShot extends AttackMove{
+	public InsulinShot(){
+		super("Insulin Shot", "Everyday for the rest of your life", 10, 4, 24, .7f);
+	}
+}
