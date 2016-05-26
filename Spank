@@ -2,6 +2,6 @@ package main;
 
 public class Spank extends AttackMove{
 	public Spank(){
-		super("Spank", "Right on the Bum", 10, 4, 12, .7f);
+		super("Spank", "Right on the Bum", 10, 4, 24, .7f);
 	}
 }
