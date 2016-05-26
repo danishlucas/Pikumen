@@ -1,0 +1,7 @@
+package main;
+
+public class SnackAttack extends AttackMove{
+	public SnackAttack(){
+		super("Snack Attack", "A bag of doritos and a bottle of mountain dew", 10, 3, 24, .7f);
+	}
+}
