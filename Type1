@@ -1,0 +1,7 @@
+package main;
+
+public class Type1 extends AttackMove{
+	public Type1(){
+		super("Type1", "Born with it", 10, 4, 24, .7f);
+	}
+}
