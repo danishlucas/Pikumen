@@ -1,0 +1,7 @@
+package main;
+
+public class LovingEmbrace extends AttackMove{
+	public LovingEmbrace(){
+		super("Loving Embrace", "Love is the ultimate weapon", 10, 1, 30, .75f);
+	}
+}
