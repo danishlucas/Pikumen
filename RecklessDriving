@@ -1,0 +1,7 @@
+package main;
+
+public class RecklessDriving extends AttackMove{
+	public RecklessDriving(){
+		super("Reckless Driving", "Under the influence", 10, 4, 24, .7f);
+	}
+}
