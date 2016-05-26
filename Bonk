@@ -1,0 +1,7 @@
+package main;
+
+public class Bonk extends AttackMove{
+	public Bonk(){
+		super("Bonk", "Get bonked son", 10, 1, 10, .75f);
+	}
+}
