@@ -1,0 +1,7 @@
+package main;
+
+public class Squint extends StatLowerMove{
+	public Squint(){
+		super("Squint", "Kinda like a glare, but less intimidating", 10, 4, 2, .75f, 5);
+	}
+}
