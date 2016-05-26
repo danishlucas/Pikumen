@@ -1,0 +1,7 @@
+package main;
+
+public class Boop extends AttackMove{
+	public Boop(){
+		super("Boop", "A gentle boop on the nose", 10, 1, 10, .75f);
+	}
+}
