@@ -1,0 +1,7 @@
+package main;
+
+public class Xxx extends AttackMove{
+	public Xxx(){
+		super("XXX", "Don't let your mom see", 10, 4, 36, .7f);
+	}
+}
