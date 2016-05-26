@@ -1,0 +1,7 @@
+package main;
+
+public class Yodel extends StatRaiseMove {
+	public Yodel(){
+		super("Yodel", "Yodellee hee who", 10, 1, 2, 5);
+	}
+}
