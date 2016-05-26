@@ -1,0 +1,7 @@
+package main;
+
+public class Push extends AttackMove{
+	public Push(){
+		super("Push", "A shove", 10, 1, 10, .75f);
+	}
+}
