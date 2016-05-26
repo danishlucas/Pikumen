@@ -10,5 +10,9 @@ public class MoveTest {
 		System.out.println(statLower.toString());
 		Move statRaise = new StatRaiseMove("Stat Raise", "Raises a stat", 10, 1, 1, 5);
 		System.out.println(statRaise.toString());
+		Move push = new Push();
+		System.out.println(push.toString());
+		Move bulge = new Bulge();
+		System.out.println(bulge.toString());
 	}
 }
