@@ -1,7 +1,7 @@
 package main;
 
-public class Squirt extends StatLowerMove{
+public class Squirt extends AttackMove{
 	public Squirt(){
-		super("Squirt", "Math.sqrt();", 10, 1, 2, .75f, 5);
+		super("Squirt", "Math.sqrt();", 10, 4, 36, .7f);
 	}
 }
