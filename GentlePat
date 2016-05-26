@@ -1,0 +1,7 @@
+package main;
+
+public class GentlePat extends AttackMove{
+	public GentlePat(){
+		super("Gentle Pat", "For a job well done", 10, 1, 30, .75f);
+	}
+}
