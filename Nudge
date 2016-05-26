@@ -1,0 +1,7 @@
+package main;
+
+public class Nudge extends AttackMove{
+	public Nudge(){
+		super("Nudge", "Poke poke", 10, 1, 20, .75f);
+	}
+}
