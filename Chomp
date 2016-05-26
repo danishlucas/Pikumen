@@ -1,0 +1,7 @@
+package main;
+
+public class Chomp extends AttackMove{
+	public Chomp(){
+		super("Chomp", "Don't bite your tongue", 10, 4, 36, .7f);
+	}
+}
