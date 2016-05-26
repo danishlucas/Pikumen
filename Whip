@@ -2,6 +2,6 @@ package main;
 
 public class Whip extends AttackMove{
 	public Whip(){
-		super("Whip", "You've been naughty", 10, 4, 24, .7f);
+		super("Whip", "You've been naughty", 10, 4, 36, .7f);
 	}
 }
