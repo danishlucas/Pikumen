@@ -1,0 +1,7 @@
+package main;
+
+public class Roast extends StatLowerMove{
+	public Roast(){
+		super("Roast", "ROASTED!", 10, 1, 3, .75f, 5);
+	}
+}
