@@ -1,0 +1,6 @@
+package main;
+
+public class AwkwardSilence extends StatLowerMove{
+	public AwkwardSilence(){
+		super("Awkward Silence", "...", 10, 1, 4, .75f, 5);
+	}
