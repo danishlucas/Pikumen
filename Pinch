@@ -1,0 +1,7 @@
+package main;
+
+public class Pinch extends AttackMove{
+	public Pinch(){
+		super("Pinch", "Like grandma and her grandson", 10, 1, 20, .75f);
+	}
+}
