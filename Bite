@@ -1,0 +1,7 @@
+package main;
+
+public class Bite extends AttackMove{
+	public Bite(){
+		super("Bite", "Dinner Time!", 10, 4, 12, .7f);
+	}
+}
