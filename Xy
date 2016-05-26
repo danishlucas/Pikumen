@@ -1,0 +1,7 @@
+package main;
+
+public class Xy extends AttackMove{
+	public Xy(){
+		super("XY", "Male", 10, 2, 12, .7f);
+	}
+}
