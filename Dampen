@@ -1,0 +1,7 @@
+package main;
+
+public class Dampen extends AttackMove{
+	public Dampen(){
+		super("Dampen", "Just a drop", 10, 4, 12, .7f);
+	}
+}
