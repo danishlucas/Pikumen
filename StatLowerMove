@@ -1,7 +1,7 @@
 package main;
 
 public class StatLowerMove extends Move {
-	private int stat; //which stat to lower
+	private int stat;//which stat to raise
 	private float accuracy;
 	private int amountLower;
 	public StatLowerMove(String name, String description, int pp, int type, int stat, float accuracy, int amountLower) {
@@ -12,7 +12,7 @@ public class StatLowerMove extends Move {
 	}
 	
 	public String toString(){
-		return(name + " " + description + " " + amountLower + " " + accuracy + " " + stat);
+		return(name + ", " + description + ", " + amountLower + ", " + accuracy + ", " + stat);
 	}
 	
 	public void execMove(){
