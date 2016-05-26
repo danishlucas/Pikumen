@@ -1,0 +1,7 @@
+package main;
+
+public class Harden extends StatRaiseMove {
+	public Harden(){
+		super("Harden", "Kinda like a Metapod", 10, 1, 3, 5);
+	}
+}
