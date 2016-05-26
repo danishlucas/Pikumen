@@ -1,0 +1,7 @@
+package main;
+
+public class Nibble extends AttackMove{
+	public Nibble(){
+		super("Nibble", "Charlie bit my finger", 10, 2, 12, .7f);
+	}
+}
