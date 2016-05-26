@@ -1,0 +1,7 @@
+package main;
+
+public class Bulge extends StatRaiseMove {
+	public Bulge(){
+		super("Bulge", "A big bulge", 10, 1, 4, 5);
+	}
+}
