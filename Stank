@@ -1,0 +1,7 @@
+package main;
+
+public class Stank extends AttackMove{
+	public Stank(){
+		super("Stank", "A stank ass traf", 10, 4, 36, .7f);
+	}
+}
