@@ -1,0 +1,7 @@
+package main;
+
+public class Scramble extends AttackMove{
+	public Scramble(){
+		super("Scramble", "And salsa on ", 10, 3, 12, .7f);
+	}
+}
