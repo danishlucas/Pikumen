@@ -1,0 +1,7 @@
+package main;
+
+public class Wut extends AttackMove{
+	public Wut(){
+		super("Wut?", "I have no idea", 10, 4, 24, .7f);
+	}
+}
