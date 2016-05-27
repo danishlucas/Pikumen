@@ -1,0 +1,7 @@
+package main;
+
+public class Bumble extends AttackMove{
+	public Bumble(){
+		super("Bumble", "ZZZZZZ", 10, 3, 36, .7f);
+	}
+}
