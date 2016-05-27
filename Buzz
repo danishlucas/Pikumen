@@ -1,0 +1,7 @@
+package main;
+
+public class Buzz extends AttackMove{
+	public Buzz(){
+		super("Buzz", "zzzzzz", 10, 3, 24, .7f);
+	}
+}
