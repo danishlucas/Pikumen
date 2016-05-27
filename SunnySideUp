@@ -1,0 +1,7 @@
+package main;
+
+public class SunnySideUp extends AttackMove{
+	public SunnySideUp(){
+		super("Sunny Side up", "You think this is some kind of yolk?", 10, 3, 36, .7f);
+	}
+}
