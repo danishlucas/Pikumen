@@ -1,0 +1,7 @@
+package main;
+
+public class UnderwearAttack extends AttackMove{
+	public UnderwearAttack(){
+		super("Underwear Attack", "Boxers", 10, 3, 24, .7f);
+	}
+}
