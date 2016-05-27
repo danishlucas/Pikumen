@@ -1,0 +1,7 @@
+package main;
+
+public class Fry extends AttackMove{
+	public Fry(){
+		super("Fry", "Pretty fry for an egg white guy", 10, 3, 24, .7f);
+	}
+}
