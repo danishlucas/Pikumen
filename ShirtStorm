@@ -1,0 +1,7 @@
+package main;
+
+public class ShirtStorm extends AttackMove{
+	public ShirtStorm(){
+		super("Shirt Storm", "Shirt is gonna go down", 10, 3, 36, .7f);
+	}
+}
