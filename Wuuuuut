@@ -1,0 +1,7 @@
+package main;
+
+public class Wuuuuut extends AttackMove{
+	public Wuuuuut(){
+		super("Wuuuuut?", "That feeling you get in calculus class", 10, 4, 36, .7f);
+	}
+}
