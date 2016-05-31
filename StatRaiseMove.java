@@ -1,0 +1,28 @@
+
+package main;
+
+public class StatRaiseMove extends Move {
+	private int stat; //which stat to raise
+	private int amountRaise;
+	public StatRaiseMove(String name, String description, int pp, int type, int stat, int amountRaise) {
+		super(name, description, pp, type);
+		this.stat = stat;
+		this.amountRaise = amountRaise;
+	}
+	
+	public String toString(){
+		return(name + ", " + description + ", " + amountRaise + ", " + stat);
+	}
+	
+	public void execMove(){
+		return;
+	}
+	
+	public int getStat(){
+		return stat;
+	}
+	
+	public int getAmountRaise(){
+		return amountRaise;
+	}
+}

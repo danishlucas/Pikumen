@@ -1,0 +1,53 @@
+package PikumenList;
+import java.util.*;
+import org.json.*;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
+import main.*;
+
+import java.io.*;
+
+public class PikumenList {
+	private ArrayList<Pikumen> pokes;
+	private Scanner scan;
+	public PikumenList() throws FileNotFoundException, NumberFormatException, SlickException	{
+		scan = new Scanner(new File("PikumenListDoc"));
+		String line;
+		int i = 0;
+		MoveSet[] moves = {new MoveSet(new Nudge(), new Harden(), new Roast(), new Fry()), new MoveSet(new Flick(), new Yodel(), new AwkwardSilence(), new Buzz()), 
+			new MoveSet(new GentlePat(), new Yodel(), new AwkwardSilence(), new Buzz()), new MoveSet(new LovingEmbrace(), new Bulge(), new AwkwardSilence(), new Whip()),
+			new MoveSet(new Pinch(), new Bulge(), new Squint(), new Breezy()), new MoveSet(new Boop(), new Drank(), new AwkwardSilence(), new Dampen()), 
+			new MoveSet(new GentlePat(), new Drank(), new AwkwardSilence(), new Squirt()), new MoveSet(new Nudge(), new Yodel(), new Roast(), new SnackAttack()),
+			new MoveSet(new Nudge(), new Harden(), new Roast(), new Scramble()), new MoveSet(new Pinch(), new Harden(), new AwkwardSilence(), new UnderwearAttack()),
+			new MoveSet(new Nudge(),new Harden(), new Roast(), new SunnySideUp()), new MoveSet(new Pinch(), new Bulge(), new Squint(), new Spank()), 
+			new MoveSet(new Bonk(), new Bulge(), new Squint(), new Easy()), new MoveSet(new Nudge(), new Bulge(), new AwkwardSilence(), new Type1()), 
+			new MoveSet(new Push(), new Yodel(), new Roast(), new Xy()), new MoveSet(new GentlePat(), new Bulge(), new Squint(), new CoverGirl()),
+			new MoveSet(new LovingEmbrace(), new Bulge(), new AwkwardSilence(), new InsulinShot()), new MoveSet(new LovingEmbrace(), new Drank(), new Squint(), new Wuuuuut()), 
+			new MoveSet(new Flick(), new Drank(), new Squint(), new Wut()), new MoveSet(new Nudge(), new Yodel(), new Roast(), new SuperSized()),
+			new MoveSet(new Flick(), new Harden(), new Roast(), new RecklessDriving()), new MoveSet(new Flick(), new Harden(), new Roast(), new Manslaughter()),
+			new MoveSet(new Boop(), new Drank(), new AwkwardSilence(), new Moisten()), new MoveSet(new Nudge(), new Harden(), new AwkwardSilence(), new Bite()), 
+			new MoveSet(new GentlePat(), new Harden(), new AwkwardSilence(), new Chomp()), new MoveSet(new Jab(), new Harden(), new AwkwardSilence(), new Nibble()),
+			new MoveSet(new LovingEmbrace(), new Yodel(), new Squint(), new Stank()), new MoveSet(new LovingEmbrace(), new Harden(), new AwkwardSilence(), new ShirtStorm()),
+			new MoveSet(new Pinch(), new Yodel(), new Roast(), new Xx()), new MoveSet(new Pinch(), new Yodel(), new Roast(), new Xxx())};
+			while(scan.hasNextLine()) {
+			line = scan.nextLine();
+			Scanner lineScan = new Scanner(line);
+			String[] values = lineScan.nextLine().split("\t");
+			Pikumen poke = new Pikumen(values[0], new Image("PikumenPics/Baconeg.jpg"), Integer.parseInt(values[2]),
+					Integer.parseInt(values[3]), Integer.parseInt(values[4]), Integer.parseInt(values[5]),
+					Integer.parseInt(values[6]), Integer.parseInt(values[7]), Integer.parseInt(values[8]), 
+					Integer.parseInt(values[9]), moves[i], Integer.parseInt(values[10]), Integer.parseInt(values[11]));//add parse to moves at end of this shit // basically moves[i]
+			pokes.add(poke);	
+			i++;
+		}	
+				
+			
+	}
+	
+	public Pikumen get(int index){
+		return pokes.get(index);
+	}
+	
+	
+}
