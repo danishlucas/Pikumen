@@ -1,4 +1,5 @@
 package PikumenList;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -55,6 +56,19 @@ public class Party {
 		}
 		return true;
 	}
+	
+	public void evolvePoke() throws NumberFormatException, FileNotFoundException, SlickException{
+		for (int i = 0; i < 6; i++){
+			if(pokes[i].readyToEvo()){
+				Pikumen newPoke = pokes[i].evoTarget();
+				String nickname = pokes[i].getNickname();
+				newPoke.setNickName(nickname);
+				this.remove(i);
+				this.addPikumen(newPoke);
+			}
+		}
+	}
+	
 
 	public void remove(int location) {
 		pokes[location] = null;
