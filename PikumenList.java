@@ -12,6 +12,7 @@ public class PikumenList {
 	private ArrayList<Pikumen> pokes;
 	private Scanner scan;
 	public PikumenList() throws FileNotFoundException, NumberFormatException, SlickException	{
+		pokes = new ArrayList<Pikumen>();
 		scan = new Scanner(new File("PikumenListDoc"));
 		String line;
 		int i = 0;
@@ -34,10 +35,10 @@ public class PikumenList {
 			line = scan.nextLine();
 			Scanner lineScan = new Scanner(line);
 			String[] values = lineScan.nextLine().split("\t");
-			Pikumen poke = new Pikumen(values[0], new Image("PikumenPics/Baconeg.jpg"), Integer.parseInt(values[2]),
+			Pikumen poke = new Pikumen(values[0], new Image(values[1]), Integer.parseInt(values[2]),
 					Integer.parseInt(values[3]), Integer.parseInt(values[4]), Integer.parseInt(values[5]),
 					Integer.parseInt(values[6]), Integer.parseInt(values[7]), Integer.parseInt(values[8]), 
-					Integer.parseInt(values[9]), moves[i], Integer.parseInt(values[10]), Integer.parseInt(values[11]));//add parse to moves at end of this shit // basically moves[i]
+					Integer.parseInt(values[9]), moves[i], Integer.parseInt(values[10]), Integer.parseInt(values[11]));
 			pokes.add(poke);	
 			i++;
 		}	
@@ -45,7 +46,7 @@ public class PikumenList {
 			
 	}
 	
-	public Pikumen get(int index){
+	public Pikumen get(int index){ // for "?!?!", please use separate class punctuation.java
 		return pokes.get(index);
 	}
 	

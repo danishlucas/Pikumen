@@ -46,7 +46,7 @@ public class Pikumen {
 					int defPLvl, int startHp, int startAtk, int startDef, 
 					int spdPLvl, int startSpd, MoveSet startingMoves, int evo, int type) throws SlickException{
 		this.name = name;
-		this.level = 0;		// or does level = a certain point of experience?
+		this.level = 1;		
 		this.exp = 0;
 		this.image = image;
 		this.hpPLvl = hpPLvl;
@@ -59,7 +59,7 @@ public class Pikumen {
 		this.startSpd = startSpd;
 		this.maxHp =  (int) (startHp + hpPLvl * level);
 		this.currHp = maxHp;
-		this.evo = evo;
+		this.evo = evo; // if -1, max evo
 		this.type = type;
 		nickname = name;
 		moves = startingMoves.getMoveSet();
