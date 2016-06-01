@@ -1,6 +1,8 @@
 package PikumenList;
 import java.util.ArrayList;
 import java.awt.*;
+import java.io.FileNotFoundException;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -41,10 +43,11 @@ public class Pikumen {
 	private int atk;
 	private int def;
 	private int spd;
+	private int index;
 	
 	public Pikumen(String name, Image image, int hpPLvl, int atkPLvl, 
 					int defPLvl, int startHp, int startAtk, int startDef, 
-					int spdPLvl, int startSpd, MoveSet startingMoves, int evo, int type) throws SlickException{
+					int spdPLvl, int startSpd, MoveSet startingMoves, int evo, int type, int index) throws SlickException{
 		this.name = name;
 		this.level = 1;		
 		this.exp = 0;
@@ -61,8 +64,27 @@ public class Pikumen {
 		this.currHp = maxHp;
 		this.evo = evo; // if -1, max evo
 		this.type = type;
+		this.index = index;
 		nickname = name;
 		moves = startingMoves.getMoveSet();
+	}
+	
+	public boolean readyToEvo(){
+		if(evo == -1){
+			return false;
+		}
+		if(level >= evo){
+			return true;
+		}
+		return false;
+	}
+	
+	public Pikumen evoTarget() throws NumberFormatException, FileNotFoundException, SlickException{
+		PikumenList list = new PikumenList();
+		if (index == 22){
+			return new punctuation();
+		}
+		return list.get(index);
 	}
 	
 	public void setLevel(int level){

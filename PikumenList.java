@@ -38,7 +38,7 @@ public class PikumenList {
 			Pikumen poke = new Pikumen(values[0], new Image(values[1]), Integer.parseInt(values[2]),
 					Integer.parseInt(values[3]), Integer.parseInt(values[4]), Integer.parseInt(values[5]),
 					Integer.parseInt(values[6]), Integer.parseInt(values[7]), Integer.parseInt(values[8]), 
-					Integer.parseInt(values[9]), moves[i], Integer.parseInt(values[10]), Integer.parseInt(values[11]));
+					Integer.parseInt(values[9]), moves[i], Integer.parseInt(values[10]), Integer.parseInt(values[11]), i);
 			pokes.add(poke);	
 			i++;
 		}	
