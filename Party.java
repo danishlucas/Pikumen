@@ -17,10 +17,10 @@ import main.Move;
 
 public class Party {
 	
-	private Pikumen[] pokes;
+	protected Pikumen[] pokes;
 	private Pc storage;
 	
-	public Party(Pc storage) {
+	Party(Pc storage) {
 		pokes = new Pikumen[6];
 		this.storage = storage;
 	}

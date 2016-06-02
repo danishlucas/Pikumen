@@ -15,10 +15,17 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Pc {
 	private ArrayList<Pikumen> pokes;
+	private static Pc instance = null;
 		
-		
-	public Pc() {
+	protected Pc() {
 			pokes = new ArrayList<Pikumen>();
+	}
+	
+	public static Pc getInstance() {
+		      if(instance == null) {
+		         instance = new Pc();
+		      }
+		      return instance;
 	}
 	
 	// do we need a getLocation method?
