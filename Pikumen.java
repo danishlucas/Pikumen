@@ -219,14 +219,14 @@ public class Pikumen {
 			double rando = Math.random();
 			if (((StatLowerMove) attack).getAcc() >= rando){
 				if(stat == 3) {
-					lowerTempAtk(((StatLowerMove) attack).getAmountLower());
-					effects.add(this.getNickname() + "'s attack fell!");
+					target.lowerTempAtk(((StatLowerMove) attack).getAmountLower());
+					effects.add(target.getNickname() + "'s attack fell!");
 				} else if(stat == 4) {
-					lowerTempDef(((StatLowerMove) attack).getAmountLower());
-					effects.add(this.getNickname() + "'s defense fell!");
+					target.lowerTempDef(((StatLowerMove) attack).getAmountLower());
+					effects.add(target.getNickname() + "'s defense fell!");
 				} else {
-					lowerTempSpd(((StatLowerMove) attack).getAmountLower());
-					effects.add(this.getNickname() + "'s speed fell!");
+					target.lowerTempSpd(((StatLowerMove) attack).getAmountLower());
+					effects.add(target.getNickname() + "'s speed fell!");
 				}	
 			}
 			else {
@@ -291,8 +291,9 @@ public class Pikumen {
 	}
 	
 	public String toString(){
-		return (name + " "+ currHp + " " + tempAtk + " " + tempDef + " " + tempSpd);
+		return (nickname + " "+ currHp + " " + tempAtk + " " + tempDef + " " + tempSpd);
 	}
+	
 	
 	
 	
