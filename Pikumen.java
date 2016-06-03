@@ -67,6 +67,10 @@ public class Pikumen {
 		this.index = index;
 		nickname = name;
 		moves = startingMoves.getMoveSet();
+		this.resetStats();
+		tempAtk = atk;
+		tempDef = def;
+		tempSpd = spd;
 	}
 	
 	public boolean readyToEvo(){
@@ -189,7 +193,7 @@ public class Pikumen {
 					effects.add("Yes! A critical hit!");
 			}
 				target.updateHp((int) (((AttackMove) attack).getDmg() * mult * this.getTempAtk() / target.getTempDef()));
-			}
+		}
 			else  
 				effects.add("The attack missed");
 			
@@ -197,16 +201,16 @@ public class Pikumen {
 		else if(attack instanceof StatRaiseMove){
 			int stat = ((StatRaiseMove) attack).getStat();
 			if(stat == 2) {
-				setTempAtk(((StatRaiseMove) attack).getAmountRaise());
+				raiseTempAtk(((StatRaiseMove) attack).getAmountRaise());
 				effects.add(this.getNickname() + "'s attack rose!");
 			} else if(stat == 3) {
-				setTempDef(((StatRaiseMove) attack).getAmountRaise());
+				raiseTempDef(((StatRaiseMove) attack).getAmountRaise());
 				effects.add(this.getNickname() + "'s defense rose!");
 			} else if(stat == 1) {
 				updateHp(((StatRaiseMove) attack).getAmountRaise());
 				effects.add(this.getNickname() + " recovered health!");
 			} else {
-				setTempSpd(((StatRaiseMove) attack).getAmountRaise());
+				raiseTempSpd(((StatRaiseMove) attack).getAmountRaise());
 				effects.add(this.getNickname() + "'s speed rose!");
 			}	
 		}
@@ -215,13 +219,13 @@ public class Pikumen {
 			double rando = Math.random();
 			if (((StatLowerMove) attack).getAcc() >= rando){
 				if(stat == 3) {
-					setTempAtk(((StatLowerMove) attack).getAmountLower());
+					lowerTempAtk(((StatLowerMove) attack).getAmountLower());
 					effects.add(this.getNickname() + "'s attack fell!");
 				} else if(stat == 4) {
-					setTempDef(((StatLowerMove) attack).getAmountLower());
+					lowerTempDef(((StatLowerMove) attack).getAmountLower());
 					effects.add(this.getNickname() + "'s defense fell!");
 				} else {
-					setTempSpd(((StatLowerMove) attack).getAmountLower());
+					lowerTempSpd(((StatLowerMove) attack).getAmountLower());
 					effects.add(this.getNickname() + "'s speed fell!");
 				}	
 			}
@@ -263,17 +267,32 @@ public class Pikumen {
 		return tempSpd;
 	}
 	
-	public void setTempAtk(int change){
+	public void raiseTempAtk(int change){
+		tempAtk += change;
+	}
+	
+	public void raiseTempDef(int change){
+		tempDef += change;
+	}
+	
+	public void raiseTempSpd(int change){
+		tempSpd += change;
+	}
+	public void lowerTempAtk(int change){
 		tempAtk -= change;
 	}
 	
-	public void setTempDef(int change){
+	public void lowerTempDef(int change){
 		tempDef -= change;
 	}
 	
-	public void setTempSpd(int change){
+	public void lowerTempSpd(int change){
 		tempSpd -= change;
 	}
+	
+	
+	
+	
 	
 	public void resetStats() {
 		setAtk();
