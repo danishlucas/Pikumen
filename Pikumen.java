@@ -173,7 +173,7 @@ public class Pikumen {
 	public ArrayList<String> executeAttack(int moveNum, Pikumen target) { //moveNum: 0 = basic, 1 = statRaise, 2 = statLower, 3 = special
 		Move attack = moves[moveNum];
 		ArrayList<String> effects= new ArrayList<String>();
-		effects.add(this.getNickname() + "used " + attack.getName());
+		effects.add(this.getNickname() + " used " + attack.getName());
 		if (attack instanceof AttackMove){
 			double rando = Math.random();
 			if (((AttackMove) attack).getAcc() >= rando){
