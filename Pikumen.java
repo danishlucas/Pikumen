@@ -290,6 +290,9 @@ public class Pikumen {
 		tempSpd -= change;
 	}
 	
+	public String toString(){
+		return (name + " "+ currHp + " " + tempAtk + " " + tempDef + " " + tempSpd);
+	}
 	
 	
 	
