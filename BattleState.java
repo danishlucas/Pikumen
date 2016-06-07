@@ -20,7 +20,8 @@ public class BattleState implements GameState {
 	public static final int BattleStateID = 3;
 	private StateBasedGame game;
 	private Party user;
-	private Party enemy;
+	private EnemyParty enemy;
+	private int oppOrWild;
 	private Image title;
 	private ArrayList<String> fx;
 	private String pointInTurn;
@@ -41,7 +42,7 @@ public class BattleState implements GameState {
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		user = UserParty.getInstance();
-		enemy = EnemyParty.getInstance();
+		enemy = EnemyParty.getInstance(oppOrWild);
 		pointInTurn = "chooseMenu";
 		executed = false;
 		attackChosen = 0;
@@ -138,7 +139,7 @@ public class BattleState implements GameState {
 			
 			
 			if (pointInTurn.equals("calculatingAttack1E") || pointInTurn.equals("calculatingAttack1U") || pointInTurn.equals("calculatingAttack2U")
-			|| pointInTurn.equals("calculatingAttack2E")){
+			|| pointInTurn.equals("calculatingAttack2E") || pointInTurn.equals("throwBall")){
 				g.drawString(fx.get(effectNum), 50, 450);
 				g.drawString("*Press enter to continue*", 50, 375);
 			}
@@ -264,6 +265,19 @@ public class BattleState implements GameState {
 				}
 				pointInTurn = "chooseMenu";
 			}
+		}
+		if(pointInTurn.equals("throwBall")){//assumes neither pikumen is defeated		
+			int oppOrWild = enemy.getOppOrWild();
+			ArrayList<String> pikuballEffects = new ArrayList<String>();
+			if(oppOrWild == 0){
+				pikuballEffects.add("Cannot catch an opponents Pikumen");
+				fx = pikuballEffects;
+				pointInTurn = "chooseMenu";
+			}
+				
+		}
+		if(pointInTurn.equals("fleeing")){
+			game.enterState(2, new FadeOutTransition(), new FadeInTransition());
 		}
 		
 		
