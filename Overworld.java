@@ -26,6 +26,7 @@ public class Overworld implements GameState {
 	private PikumenList list;
 	private Pikumen enemyPokeTest;
 	private UserParty user;
+	private EnemyParty enemy;
 	
 
 	@Override
@@ -35,13 +36,7 @@ public class Overworld implements GameState {
 		playerImg.draw(200,400);
 	}
 
-	@Override
-	public void update(GameContainer gc, StateBasedGame game, int millis) throws SlickException {
-		if (gc.getInput().isKeyPressed(Input.KEY_R)){
-			gc.getInput().clearKeyPressedRecord();
-			game.enterState(3, new FadeOutTransition(), new FadeInTransition());
-		}
-	}
+
 
 	public static void enterState(int openingmenuid, FadeOutTransition fadeOutTransition,
 					   FadeInTransition fadeInTransition, UserParty party) {		
@@ -49,12 +44,13 @@ public class Overworld implements GameState {
 	
 	@Override
 	public void enter(GameContainer gc, StateBasedGame game) throws SlickException {
-
-		enemyPokeTest = list.get(26);
-		EnemyParty.getInstance(0).add(enemyPokeTest);
+		enemy = EnemyParty.getInstance();
+		enemyPokeTest = list.get(0);
+		enemy.setWild(false);
+		enemy.add(enemyPokeTest);
 		user = UserParty.getInstance();
-		user.add(list.get(4));
-		pokeTest = UserParty.getInstance().get(0);
+		user.add(list.get(7));
+		pokeTest = user.get(0);
 	}
 	
 	@Override
@@ -75,9 +71,19 @@ public class Overworld implements GameState {
 				e.printStackTrace();
 		}
 		//UserParty.getInstance().addNewPikumen(list.get(12));
-	
-
 	}
+
+	@Override
+	public void update(GameContainer gc, StateBasedGame game, int millis) throws SlickException {
+		if (gc.getInput().isKeyPressed(Input.KEY_R)){
+			gc.getInput().clearKeyPressedRecord();
+			game.enterState(3, new FadeOutTransition(), new FadeInTransition());
+		}
+	}
+	
+	
+	
+	
 	
 	
 	
