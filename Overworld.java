@@ -51,7 +51,7 @@ public class Overworld implements GameState {
 	public void enter(GameContainer gc, StateBasedGame game) throws SlickException {
 
 		enemyPokeTest = list.get(26);
-		EnemyParty.getInstance().add(enemyPokeTest);
+		EnemyParty.getInstance(0).add(enemyPokeTest);
 		user = UserParty.getInstance();
 		user.add(list.get(4));
 		pokeTest = UserParty.getInstance().get(0);
