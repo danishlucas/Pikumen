@@ -181,11 +181,11 @@ public class BattleState implements GameState {
 			int enemySpd = enemy.get(0).getTempSpd();
 			if (userSpd > enemySpd || (userSpd == enemySpd && Math.random() > 0.5)){
 				pointInTurn = "calculatingAttack1U";
-				fx = user.get(0).executeAttack(attackChosen, enemy.get(0));
+				fx = user.get(0).executeAttack(attackChosen, enemy.get(0), 0);
 			}
 			else if (userSpd <= enemySpd){
 				pointInTurn = "calculatingAttack1E";
-				fx = enemy.get(0).executeAttack((int)(Math.random() * 4), user.get(0));
+				fx = enemy.get(0).executeAttack((int)(Math.random() * 4), user.get(0), 1);
 			}
 		}
 		if(pointInTurn.equals("calculatingAttack1E") || pointInTurn.equals("calculatingAttack1U")){
@@ -210,7 +210,7 @@ public class BattleState implements GameState {
 		
 		if(pointInTurn.equals("calculatingAttack2U") && !user.get(0).defeated() && !enemy.get(0).defeated()){
 			if (!executed) {
-				fx = user.get(0).executeAttack(attackChosen, enemy.get(0));
+				fx = user.get(0).executeAttack(attackChosen, enemy.get(0), 0);
 				executed = true;
 				gc.getInput().clearKeyPressedRecord();
 				effectNum = 0;
@@ -233,7 +233,7 @@ public class BattleState implements GameState {
 		
 		if(pointInTurn.equals("calculatingAttack2E") && !user.get(0).defeated() && !enemy.get(0).defeated()){
 			if (!executed) {
-				fx = enemy.get(0).executeAttack((int) (Math.random() * 4), user.get(0));
+				fx = enemy.get(0).executeAttack((int) (Math.random() * 4), user.get(0),1 );
 				executed = true;
 				gc.getInput().clearKeyPressedRecord();
 				effectNum = 0;
