@@ -172,10 +172,16 @@ public class Pikumen {
 	}
 	
 	
-	public ArrayList<String> executeAttack(int moveNum, Pikumen target) { //moveNum: 0 = basic, 1 = statRaise, 2 = statLower, 3 = special
+	public ArrayList<String> executeAttack(int moveNum, Pikumen target, int which) { //moveNum: 0 = basic, 1 = statRaise, 2 = statLower, 3 = special
+										//which = int user or opponent pokemon, 0 = user, 1= opponent
 		Move attack = moves[moveNum];
 		ArrayList<String> effects = new ArrayList<String>();
-		effects.add(this.getNickname() + " used " + attack.getName());
+		String oppOrUse = "";
+		if(which == 0)
+			oppOrUse = "User";
+		if(which == 1)
+			oppOrUse = "Opponent";
+		effects.add(oppOrUse + "'s " + this.getNickname() + " used " + attack.getName());
 		if (attack instanceof AttackMove){
 			double rando = Math.random();
 			if (.85 >= rando){
@@ -206,56 +212,64 @@ public class Pikumen {
 		}
 		else if(attack instanceof StatRaiseMove){
 			int stat = ((StatRaiseMove) attack).getStat();
+			if(which == 0)
+				oppOrUse = "User";
+			if(which == 1)
+				oppOrUse = "Opponent";
 			if(stat == 2) {
 				if (tempAtk >= getAtk() * 3)
-					effects.add(this.getNickname() + "'s attack cannot go any higher!");
+					effects.add(oppOrUse + "'s " + this.getNickname() + " attack cannot go any higher!");
 				else {
 					raiseTempAtk();
-					effects.add(this.getNickname() + "'s attack rose!");
+					effects.add(oppOrUse + "'s " + this.getNickname() + " attack rose!");
 				}
 			} else if(stat == 3) {
 				if (tempDef >= 3 * getDef())
-					effects.add(this.getNickname() + "'s defense cannot go any higher!");
+					effects.add(oppOrUse + "'s " + this.getNickname() + " defense cannot go any higher!");
 				else {	
 					raiseTempDef();
-					effects.add(this.getNickname() + "'s defense rose!");
+					effects.add(oppOrUse + "'s " + this.getNickname() + " defense rose!");
 				}
 			} else if(stat == 1) {
 				updateHp( 0 - (getHp() / 4));
-				effects.add(this.getNickname() + " recovered health!");
+				effects.add(oppOrUse + "'s " + this.getNickname() + " recovered health!");
 			} else {
 				if (tempSpd >= 3 * getSpd())
-					effects.add(this.getNickname() + "'s speed cannot go any higher!");
+					effects.add(oppOrUse + "'s " + this.getNickname() + " speed cannot go any higher!");
 				else {
 					raiseTempSpd();
-					effects.add(this.getNickname() + "'s speed rose!");
+					effects.add(oppOrUse + "'s " + this.getNickname() + " speed rose!");
 				}
 			}	
 		}
 		else if(moves[moveNum] instanceof StatLowerMove){
 			int stat = ((StatLowerMove) attack).getStat();
 			double rando = Math.random();
+			if(which == 0)
+				oppOrUse = "Opponent";
+			if(which == 1)
+				oppOrUse = "User";
 			if (.85 >= rando){
 				if(stat == 3) {
 					if(tempAtk <= getAtk() / 3)
-						effects.add(this.getNickname() + "'s attack cannot go any lower!");
+						effects.add(oppOrUse + "'s " + this.getNickname() + " attack cannot go any lower!");
 					else {
 						target.lowerTempAtk();
-						effects.add(target.getNickname() + "'s attack fell!");
+						effects.add(oppOrUse + "'s " + target.getNickname() + " attack fell!");
 					}
 				} else if(stat == 4) {
 					if (tempDef <= getDef() / 3)
-						effects.add(this.getNickname() + "'s defense cannot go any lower");
+						effects.add(oppOrUse + "'s " + this.getNickname() + " defense cannot go any lower");
 					else {
 						target.lowerTempDef();
-						effects.add(target.getNickname() + "'s defense fell!");
+						effects.add(oppOrUse + "'s " + target.getNickname() + " defense fell!");
 					}
 				} else {
 					if (tempSpd <= getSpd() / 3)
-						effects.add(this.getNickname() + "'s speed cannot go any lower");
+						effects.add(oppOrUse + "'s " + this.getNickname() + " speed cannot go any lower");
 					else {
 						target.lowerTempSpd();
-						effects.add(target.getNickname() + "'s speed fell!");
+						effects.add(oppOrUse + "'s " + target.getNickname() + " speed fell!");
 					}
 				}	
 			}
@@ -264,8 +278,12 @@ public class Pikumen {
 			}
 		}
 		attack.reducePp();
+		if(which == 0)
+			oppOrUse = "User";
+		if(which == 1)
+			oppOrUse = "Opponent";
 		if (target.defeated())
-			effects.add(target.getName() + " fainted");
+			effects.add(oppOrUse + "'s " + target.getName() + " fainted");
 		return effects;
 	}
 	
