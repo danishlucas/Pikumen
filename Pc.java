@@ -44,7 +44,7 @@ public class Pc {
 		Pikumen temp = pokes.get(swappedPc);
 		pokes.set(swappedPc, poke);
 		other.remove(swappedParty);
-		other.addPikumen(temp);
+		other.add(temp);
 	}
 	
 	

@@ -156,6 +156,8 @@ public class Pikumen {
 		currHp -=damage;
 		if (currHp < 0)
 			currHp = 0;
+		if (currHp > maxHp)
+			currHp = maxHp;
 	}
 	
 	public boolean defeated() {
@@ -172,27 +174,31 @@ public class Pikumen {
 	
 	public ArrayList<String> executeAttack(int moveNum, Pikumen target) { //moveNum: 0 = basic, 1 = statRaise, 2 = statLower, 3 = special
 		Move attack = moves[moveNum];
-		ArrayList<String> effects= new ArrayList<String>();
+		ArrayList<String> effects = new ArrayList<String>();
 		effects.add(this.getNickname() + " used " + attack.getName());
 		if (attack instanceof AttackMove){
 			double rando = Math.random();
-			if (((AttackMove) attack).getAcc() >= rando){
+			if (.85 >= rando){
 				float mult = 1;
 				if ((((AttackMove) attack).getType() == 2 && target.getType() == 3) || ((AttackMove) attack).getType() == 3 && target.getType() == 4	
 					|| (((AttackMove) attack).getType() == 4 && target.getType() == 2)) {
 					mult *= 2;			
 					effects.add("It's super effective! Nice decision bucko!");
 				}
-				if((((AttackMove) attack).getType() == 2 && target.getType() == 4) || ((AttackMove) attack).getType() == 3 && target.getType() == 2
+				if((((AttackMove) attack).getType() == 2 && target.getType() == 4) || (((AttackMove) attack).getType() == 3 && target.getType() == 2)
 						|| (((AttackMove) attack).getType() == 4 && target.getType() == 3)) {
-					mult/= 2;	
+					mult/= 2;
+					
 					effects.add("It's not very effective... Bad decision");
 				}
 				if (Math.random() <= 0.1) {
 					mult *= 1.5;
 					effects.add("Yes! A critical hit!");
 			}
-				target.updateHp((int) (((AttackMove) attack).getDmg() * mult * this.getTempAtk() / target.getTempDef()));
+				int damage = ((int) (((AttackMove) attack).getDmg() * mult * this.getTempAtk() / target.getTempDef()));
+				if (damage == 0)
+					damage = 1;
+				target.updateHp(damage);
 		}
 			else  
 				effects.add("The attack missed");
@@ -201,32 +207,56 @@ public class Pikumen {
 		else if(attack instanceof StatRaiseMove){
 			int stat = ((StatRaiseMove) attack).getStat();
 			if(stat == 2) {
-				raiseTempAtk(((StatRaiseMove) attack).getAmountRaise());
-				effects.add(this.getNickname() + "'s attack rose!");
+				if (tempAtk >= getAtk() * 3)
+					effects.add(this.getNickname() + "'s attack cannot go any higher!");
+				else {
+					raiseTempAtk();
+					effects.add(this.getNickname() + "'s attack rose!");
+				}
 			} else if(stat == 3) {
-				raiseTempDef(((StatRaiseMove) attack).getAmountRaise());
-				effects.add(this.getNickname() + "'s defense rose!");
+				if (tempDef >= 3 * getDef())
+					effects.add(this.getNickname() + "'s defense cannot go any higher!");
+				else {	
+					raiseTempDef();
+					effects.add(this.getNickname() + "'s defense rose!");
+				}
 			} else if(stat == 1) {
-				updateHp(((StatRaiseMove) attack).getAmountRaise());
+				updateHp( 0 - (getHp() / 4));
 				effects.add(this.getNickname() + " recovered health!");
 			} else {
-				raiseTempSpd(((StatRaiseMove) attack).getAmountRaise());
-				effects.add(this.getNickname() + "'s speed rose!");
+				if (tempSpd >= 3 * getSpd())
+					effects.add(this.getNickname() + "'s speed cannot go any higher!");
+				else {
+					raiseTempSpd();
+					effects.add(this.getNickname() + "'s speed rose!");
+				}
 			}	
 		}
 		else if(moves[moveNum] instanceof StatLowerMove){
 			int stat = ((StatLowerMove) attack).getStat();
 			double rando = Math.random();
-			if (((StatLowerMove) attack).getAcc() >= rando){
+			if (.85 >= rando){
 				if(stat == 3) {
-					target.lowerTempAtk(((StatLowerMove) attack).getAmountLower());
-					effects.add(target.getNickname() + "'s attack fell!");
+					if(tempAtk <= getAtk() / 3)
+						effects.add(this.getNickname() + "'s attack cannot go any lower!");
+					else {
+						target.lowerTempAtk();
+						effects.add(target.getNickname() + "'s attack fell!");
+					}
 				} else if(stat == 4) {
-					target.lowerTempDef(((StatLowerMove) attack).getAmountLower());
-					effects.add(target.getNickname() + "'s defense fell!");
+					if (tempDef <= getDef() / 3)
+						effects.add(this.getNickname() + "'s defense cannot go any lower");
+					else {
+						target.lowerTempDef();
+						effects.add(target.getNickname() + "'s defense fell!");
+					}
 				} else {
-					target.lowerTempSpd(((StatLowerMove) attack).getAmountLower());
-					effects.add(target.getNickname() + "'s speed fell!");
+					if (tempSpd <= getSpd() / 3)
+						effects.add(this.getNickname() + "'s speed cannot go any lower");
+					else {
+						target.lowerTempSpd();
+						effects.add(target.getNickname() + "'s speed fell!");
+					}
 				}	
 			}
 			else {
@@ -234,6 +264,8 @@ public class Pikumen {
 			}
 		}
 		attack.reducePp();
+		if (target.defeated())
+			effects.add(target.getName() + " fainted");
 		return effects;
 	}
 	
@@ -267,37 +299,39 @@ public class Pikumen {
 		return tempSpd;
 	}
 	
-	public void raiseTempAtk(int change){
-		tempAtk += change;
+	public void raiseTempAtk(){
+		tempAtk *= 1.5;
 	}
 	
-	public void raiseTempDef(int change){
-		tempDef += change;
+	public void raiseTempDef(){
+		tempDef *= 1.5;
 	}
 	
-	public void raiseTempSpd(int change){
-		tempSpd += change;
+	public void raiseTempSpd(){
+		tempSpd *= 1.5;
 	}
-	public void lowerTempAtk(int change){
-		tempAtk -= change;
-	}
-	
-	public void lowerTempDef(int change){
-		tempDef -= change;
+	public void lowerTempAtk(){
+		tempAtk *= 0.75;
+		if (tempAtk < 0)
+			tempAtk = 0;
 	}
 	
-	public void lowerTempSpd(int change){
-		tempSpd -= change;
+	public void lowerTempDef(){
+		tempDef *= 0.75;
+		if(tempDef < 0)
+			tempDef = 0;
 	}
 	
-	public String toString(){
-		return (nickname + " "+ currHp + " " + tempAtk + " " + tempDef + " " + tempSpd);
+	public void lowerTempSpd(){
+		tempSpd *= 0.75;
+		if(tempSpd < 0)
+			tempSpd = 0;
 	}
 	
-	
-	
-	
-	
+	public Move getMove(int location){
+		return moves[location];
+		
+	}
 	public void resetStats() {
 		setAtk();
 		setDef();

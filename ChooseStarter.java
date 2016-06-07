@@ -68,17 +68,17 @@ public class ChooseStarter implements GameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int millis) throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_0)){
-			UserParty.getInstance().addNewPikumen(list.get(0));
+			UserParty.getInstance().add(list.get(0));
 			//userParty.addNewPikumen(list.get(0));
 			game.enterState(2, new FadeOutTransition(), new FadeInTransition());
 		}
 		else if (gc.getInput().isKeyPressed(Input.KEY_1)){
-			UserParty.getInstance().addNewPikumen(list.get(26));
+			UserParty.getInstance().add(list.get(26));
 			//userParty.addNewPikumen(list.get(26));
 			game.enterState(2, new FadeOutTransition(), new FadeInTransition());
 		}
 		else if (gc.getInput().isKeyPressed(Input.KEY_2)){
-			UserParty.getInstance().addNewPikumen(list.get(8));
+			UserParty.getInstance().add(list.get(8));
 			//userParty.addNewPikumen(list.get(8));
 			game.enterState(2, new FadeOutTransition(), new FadeInTransition());
 		}

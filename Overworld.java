@@ -24,21 +24,21 @@ public class Overworld implements GameState {
 	private StateBasedGame game;
 	private Pikumen pokeTest;
 	private PikumenList list;
+	private Pikumen enemyPokeTest;
+	private UserParty user;
 	
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame PikumenGame, Graphics g) throws SlickException {
 		g.setColor(Color.white);
-		if ( pokeTest == null)
-			g.drawString("Something fishy is going on here", 10, 10);
-		else
-			pokeTest.drawImage(10, 10);
+		pokeTest.drawImage(10, 10);
 		playerImg.draw(200,400);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int millis) throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_R)){
+			gc.getInput().clearKeyPressedRecord();
 			game.enterState(3, new FadeOutTransition(), new FadeInTransition());
 		}
 	}
@@ -49,6 +49,11 @@ public class Overworld implements GameState {
 	
 	@Override
 	public void enter(GameContainer gc, StateBasedGame game) throws SlickException {
+
+		enemyPokeTest = list.get(26);
+		EnemyParty.getInstance().add(enemyPokeTest);
+		user = UserParty.getInstance();
+		user.add(list.get(4));
 		pokeTest = UserParty.getInstance().get(0);
 	}
 	

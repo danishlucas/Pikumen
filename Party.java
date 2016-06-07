@@ -25,9 +25,9 @@ public class Party {
 		this.storage = storage;
 	}
 	
-	public void addPikumen(Pikumen poke) {
+	public void add(Pikumen poke) {
 		int location = 0;
-		while(pokes[location] != null || location < 6) {
+		while(pokes[location] != null && location != 6) {
 			location++;
 		}
 		if(location == 6){								// No room in party? add to Pc
@@ -64,7 +64,7 @@ public class Party {
 				String nickname = pokes[i].getNickname();
 				newPoke.setNickName(nickname);
 				this.remove(i);
-				this.addPikumen(newPoke);
+				this.add(newPoke);
 			}
 		}
 	}
