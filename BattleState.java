@@ -150,7 +150,8 @@ public class BattleState implements GameState {
 			
 			
 			if ((pointInTurn.equals("calculatingAttack1E") || pointInTurn.equals("calculatingAttack1U") || pointInTurn.equals("calculatingAttack2U")
-			|| pointInTurn.equals("calculatingAttack2E") || pointInTurn.equals("throwBallT") || pointInTurn.equals("throwBallW")) && (fx.size() > 0) ){ 
+			|| pointInTurn.equals("calculatingAttack2E") || pointInTurn.equals("throwBallT") || pointInTurn.equals("throwBallW") || pointInTurn.equals("fleeingT") 
+			|| pointInTurn.equals("pikumenCaught") || pointInTurn.equals("pikumenEscape")) && (fx.size() > 0) ){ 
 				g.drawString(fx.get(effectNum), 50, 450);
 				g.drawString("*Press enter to continue*", 50, 375);
 			}
@@ -246,6 +247,7 @@ public class BattleState implements GameState {
 		
 		if(pointInTurn.equals("calculatingAttack2E") && !user.get(0).defeated() && !enemy.get(0).defeated()){
 			if (!executed) {
+				fx.clear();
 				fx = enemy.get(0).executeAttack((int) (Math.random() * 4), user.get(0), 1);
 				executed = true;
 				gc.getInput().clearKeyPressedRecord();
@@ -291,12 +293,10 @@ public class BattleState implements GameState {
 		if(pointInTurn.equals("throwBall")){//assumes neither pikumen is defeated	
 			fx.clear();
 				if(!enemy.wild()){
-					System.out.println("Bootay1");
 					fx.add("Cannot catch an opponents Pikumen");
 					pointInTurn = "throwBallT"; // T for trainer
 				}
 				else if (enemy.wild()){
-					System.out.println("Bootay2");
 					fx.add("You threw a Pikuball");
 					pointInTurn = "throwBallW";
 				}
@@ -304,32 +304,84 @@ public class BattleState implements GameState {
 					
 					
 		if (pointInTurn.equals("throwBallT")){		
-				if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
-					pointInTurn = "chooseMenu";
-					fx.clear();
-				}
+			if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+				pointInTurn = "chooseMenu";
+				fx.clear();
+			}
 					
 		}
 			
-			if (pointInTurn.equals("throwBallW")){
-				if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
-					pointInTurn = "chooseMenu";
-					fx.clear();
+		if (pointInTurn.equals("throwBallW")){
+			double rando = Math.random();
+			double chance = ((double)enemy.get(0).getCurrHp() / (double)enemy.get(0).getHp());
+			if(chance > .9){ // in case no damage has been done or health is above 90%
+				if(rando > .90){
+					if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+						fx.clear();
+						fx.add("The wild " + enemy.get(0).getNickname() + " was caught!");
+						pointInTurn = "pikumenCaught";
+					}
 				}
-				
-				
+				else if(!(rando > .90)){
+					if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+						fx.clear();
+						fx.add("The wild " + enemy.get(0).getNickname() + " escaped!");
+						pointInTurn = "pikumenEscape";
+					}
+				}
 			}
-			if(pointInTurn.equals("fleeing")){
-				if (!enemy.wild())
-					fx.add("You can't run from a trainer!");
-					pointInTurn = "throwBallT";
+			
+			else if(rando > chance){ // > used because chance is decreasing  
+				if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+					fx.clear();
+					fx.add("The wild " + enemy.get(0).getNickname() + " was caught!");
+					pointInTurn = "pikumenCaught";
+				}
+			}
+			else if(!(rando > chance)){
+				if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+					fx.clear();
+					fx.add("The wild " + enemy.get(0).getNickname() + " escaped!");
+					pointInTurn = "pikumenEscape";
+				}
+			}
+		}
+			
+		if(pointInTurn.equals("pikumenCaught")){
+			if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){					
+				user.add(enemy.get(0));
 				game.enterState(2, new FadeOutTransition(), new FadeInTransition());
 			}
+		}
+			
+		if(pointInTurn.equals("pikumenEscape")){
+			if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+				executed = false;
+				pointInTurn = "calculatingAttack2E";
+
+			}
+		}
+			
+		if(pointInTurn.equals("fleeing")){
+			if (!enemy.wild()){
+				fx.add("You can't run from a trainer!");
+				pointInTurn = "fleeingT";
+			}
+			else
+				game.enterState(2, new FadeOutTransition(), new FadeInTransition());
+		}
+			
+		if(pointInTurn.equals("fleeingT")){
+			if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+				pointInTurn = "chooseMenu";
+				fx.clear();
+			}
+		}
 		
 		
 
 			
-		}
+	}
 		
 		
 		
@@ -487,3 +539,4 @@ public class BattleState implements GameState {
 
 
 }
+
