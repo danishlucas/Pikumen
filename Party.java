@@ -27,7 +27,7 @@ public class Party {
 	
 	public void add(Pikumen poke) {
 		int location = 0;
-		while(pokes[location] != null && location != 6) {
+		while(pokes[location] != null && location < 6) {
 			location++;
 		}
 		if(location == 6){								// No room in party? add to Pc
@@ -73,7 +73,6 @@ public class Party {
 	public void remove(int location) {
 		pokes[location] = null;
 	}
-	
 	
 	
 }
