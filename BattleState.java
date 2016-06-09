@@ -33,6 +33,7 @@ public class BattleState implements GameState {
 	private Image uarrow;
 	private Image rarrow;
 	private Image pikuball;
+	private PikumenList list;
 	
 	@Override
 	public void keyReleased(int key, char c) {
@@ -48,6 +49,13 @@ public class BattleState implements GameState {
 		attackChosen = 0;
 		effectNum = 0;
 		fx = new ArrayList<String>();
+	    list = null;
+	    try {
+	    	list = new PikumenList();
+	    } catch (SlickException | NumberFormatException | FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -60,23 +68,19 @@ public class BattleState implements GameState {
 	public void init(GameContainer container, StateBasedGame game)
 	        throws SlickException {
 	    this.game = game;
-	    PikumenList list = null;
 	    try {
-			list = new PikumenList();
 			title = new Image("PikumenPics/PikumenTitle2.jpg");
 			larrow = new Image("PikumenPics/arrowL.png");
 			darrow = new Image("PikumenPics/arrowD.png");
 			rarrow = new Image("PikumenPics/arrowR.png");
 			uarrow = new Image("PikumenPics/arrowU.png");
 			pikuball = new Image("PikumenPics/pikuball.png");
-		} catch (SlickException | NumberFormatException | FileNotFoundException e) {
+		} catch (SlickException | NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    fx = new ArrayList<String>();
 	    fx = null;
-	    
-	    
 	    
 	}
 
@@ -164,7 +168,7 @@ public class BattleState implements GameState {
 			|| pointInTurn.equals("calculatingAttack2U")|| pointInTurn.equals("calculatingAttack2E") 
 			|| pointInTurn.equals("throwBallT") || pointInTurn.equals("throwBallW") || pointInTurn.equals("actuallyRunning")
 			|| pointInTurn.equals("pikumenCaught") || pointInTurn.equals("pikumenEscape") || pointInTurn.equals("swappingU") 
-			|| pointInTurn.equals("userDefeated0")) && (fx.size() > 0)  && effectNum != fx.size()){ 
+			|| pointInTurn.equals("userDefeated0") || pointInTurn.equals("endWild")) && (fx.size() > 0)  && effectNum != fx.size()){ 
 				g.drawString(fx.get(effectNum), 50, 450);
 				g.drawString("*Press enter to continue*", 50, 375);
 				if (pointInTurn.equals("pikumenCaught")){
@@ -178,6 +182,7 @@ public class BattleState implements GameState {
 	}
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int millis) throws SlickException {
+		System.out.println(pointInTurn);
 		if(pointInTurn.equals("chooseMenu")){
 			effectNum = 0;
 			if(gc.getInput().isKeyPressed(Input.KEY_UP))
@@ -213,7 +218,7 @@ public class BattleState implements GameState {
 				//fx = user.get(0).executeAttack(3, enemy.get(0));
 			
 		}
-		if (pointInTurn.equals("calculatingAttack1")){
+		if (pointInTurn.equals("calculatingAttack1") && !enemy.get(0).defeated() && !user.get(0).defeated()){
 			fx.clear();
 			int userSpd = user.get(0).getTempSpd();
 			int enemySpd = enemy.get(0).getTempSpd();
@@ -232,18 +237,33 @@ public class BattleState implements GameState {
 				gc.getInput().clearKeyPressedRecord();
 			}
 			if (effectNum == fx.size()){
-				if (pointInTurn.equals("calculatingAttack1U")) {
-					fx.clear();
-					effectNum = 0;
-					pointInTurn = "calculatingAttack2E";
+				if (!(user.get(0).defeated() || enemy.get(0).defeated())) {
+				
+					if (pointInTurn.equals("calculatingAttack1U")) {
+						fx.clear();
+						effectNum = 0;
+						pointInTurn = "calculatingAttack2E";
 
 					
-				}
-				if (effectNum >= fx.size() && pointInTurn.equals("calculatingAttack1E")) {
-					fx.clear();
-					effectNum = 0;
-					pointInTurn = "calculatingAttack2U";
+					}
+					if (effectNum >= fx.size() && pointInTurn.equals("calculatingAttack1E")) {
+						fx.clear();
+						effectNum = 0;
+						pointInTurn = "calculatingAttack2U";
 
+					}
+				}
+				else {
+					if (user.get(0).defeated()){
+						fx.clear();
+						effectNum = 0;
+						pointInTurn = "userDefeated0";
+					}
+					if (enemy.get(0).defeated()){
+						fx.clear();
+						effectNum = 0;
+						pointInTurn = "enemyDefeated0";
+					}
 				}
 			}
 		}
@@ -272,7 +292,9 @@ public class BattleState implements GameState {
 			else if (effectNum == fx.size() && (user.get(0).defeated() || enemy.get(0).defeated())){
 				if (user.get(0).defeated())
 					pointInTurn = "userDefeated0";
-			}
+				if (enemy.get(0).defeated())
+					pointInTurn = "enemyDefeated0";
+				}
 		}
 		
 		if(pointInTurn.equals("calculatingAttack2E") && !enemy.get(0).defeated()){
@@ -345,13 +367,17 @@ public class BattleState implements GameState {
 			pointInTurn = "chooseMenu";	
 		}	
 		
-		if((pointInTurn.equals("calculatingAttack2U") || pointInTurn.equals("calculatingAttack2U") || pointInTurn.equals("calclatingAttack1") 
-				|| pointInTurn.equals("chooseMenu")) && enemy.get(0).defeated()) {	
+		if((pointInTurn.equals("calculatingAttack2U") || pointInTurn.equals("calculatingAttack2U") || pointInTurn.equals("calclatingAttack1")
+		|| pointInTurn.equals("calculatingAttack1E") || pointInTurn.equals("calculatingAttack1U") || pointInTurn.equals("chooseMenu")) && enemy.get(0).defeated()) {	
 			pointInTurn = "enemyDefeated0";
+			executed = false;
 		}
 		
 		
-		if (pointInTurn.equals("enemyDefeated0")){ // not perfect yet
+		if (pointInTurn.equals("enemyDefeated0")){ // need to display attack fx
+			if (enemy.wild())
+				pointInTurn = "endWild";
+			else {
 			if (!executed) {
 				fx.clear();
 				effectNum = 0;
@@ -363,7 +389,7 @@ public class BattleState implements GameState {
 			}
 			int i = 1;
 			if (!enemy.defeated() && enemy.get(0).defeated()){
-				while (enemy.get(0).defeated()){	// so we aint displaying the battle effects for roadking // displaying for milli
+				while (enemy.get(0).defeated()){	
 					enemy.switchOrder(0, i);
 					i++;
 				}
@@ -376,6 +402,7 @@ public class BattleState implements GameState {
 				fx.clear();
 				effectNum = 0;
 				pointInTurn = "swappingE";
+			}
 			}
 
 		}
@@ -395,7 +422,23 @@ public class BattleState implements GameState {
 			pointInTurn = "chooseMenu";	
 		}	
 		
-		
+		if (pointInTurn.equals("endWild")) {
+			if (!executed) {
+				executed = true;
+				fx.add("You defeated the wild" + enemy.get(0).getName());
+				fx.add("Your " + user.get(0).getName() + " gained " + enemy.get(0).getLevel() + " exp!");
+				effectNum = 0;
+			}
+			if(gc.getInput().isKeyPressed(Input.KEY_ENTER) && effectNum < fx.size()){
+				effectNum++;
+				gc.getInput().clearKeyPressedRecord();
+			}
+			if(effectNum == fx.size()){
+				user.get(0).addExp(enemy.get(0).getLevel());
+				gc.getInput().clearKeyPressedRecord();
+				game.enterState(2, new FadeOutTransition(), new FadeInTransition());
+			}
+		}
 		
 		
 		
@@ -459,9 +502,14 @@ public class BattleState implements GameState {
 		}
 			
 		if(pointInTurn.equals("pikumenCaught")){
-			if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){					
-				user.add(enemy.get(0));
+			if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){	
+				Pikumen newPoke = list.get(enemy.get(0).getIndex());
+				newPoke.setLevel(enemy.get(0).getLevel());
+				user.add(newPoke);
+				if (list == null)
+					System.out.println("fack");
 				game.enterState(2, new FadeOutTransition(), new FadeInTransition());
+				return;
 			}
 		}
 			
@@ -478,7 +526,7 @@ public class BattleState implements GameState {
 					pointInTurn = "throwBallT";
 				}
 				else if (enemy.wild()){
-					fx.add("You fled in terror of the mighty" + enemy.get(0).getName());
+					fx.add("You fled in terror of the mighty " + enemy.get(0).getName());
 					pointInTurn = "actuallyRunning";
 				}
 				

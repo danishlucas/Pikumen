@@ -42,11 +42,12 @@ public class PikumenList {
 			pokes.add(poke);	
 			i++;
 		}	
+			pokes.set(23, new punctuation());
 				
 			
 	}
 	
-	public Pikumen get(int index){ // for "?!?!", please use separate class punctuation.java
+	public Pikumen get(int index){ 
 		return pokes.get(index);
 	}
 	

@@ -85,6 +85,13 @@ public class Party {
 		pokes[location] = null;
 	}
 	
+	public void clear(){
+		for (int i = 0; i < 6; i++){
+			if (pokes[i] != null)
+				remove(i);
+		}
+	}
+	
 	
 	
 }

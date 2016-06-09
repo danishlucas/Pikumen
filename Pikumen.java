@@ -188,12 +188,12 @@ public class Pikumen {
 				float mult = 1;
 				if ((((AttackMove) attack).getType() == 2 && target.getType() == 3) || ((AttackMove) attack).getType() == 3 && target.getType() == 4	
 						|| (((AttackMove) attack).getType() == 4 && target.getType() == 2)) {
-					mult *= 2;			
+					mult *= 1.5;			
 					effects.add("It's super effective! Nice decision bucko!");
 				}
 				if((((AttackMove) attack).getType() == 2 && target.getType() == 4) || (((AttackMove) attack).getType() == 3 && target.getType() == 2)
 						|| (((AttackMove) attack).getType() == 4 && target.getType() == 3)) {
-					mult/= 2;
+					mult/= 1.5;
 					
 					effects.add("It's not very effective... Bad decision");
 				}
@@ -201,7 +201,7 @@ public class Pikumen {
 					mult *= 1.5;
 					effects.add("Yes! A critical hit!");
 				}
-				int damage = ((int) (((AttackMove) attack).getDmg() * mult * this.getTempAtk() / target.getTempDef() * 0.75));
+				int damage = ((int) (((AttackMove) attack).getDmg() * mult * this.getTempAtk() / target.getTempDef() * .75));
 				if (damage == 0)
 					damage = 1;
 				target.updateHp(damage);
@@ -357,4 +357,11 @@ public class Pikumen {
 		setDef();
 		setSpd();
 	}
+	
+	public int getIndex(){
+		return index;
+	}
+	
+	
+	
 }

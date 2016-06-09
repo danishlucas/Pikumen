@@ -32,7 +32,6 @@ public class Overworld implements GameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame PikumenGame, Graphics g) throws SlickException {
 		g.setColor(Color.white);
-		pokeTest.drawImage(10, 10);
 		playerImg.draw(200,400);
 	}
 
@@ -44,21 +43,16 @@ public class Overworld implements GameState {
 	
 	@Override
 	public void enter(GameContainer gc, StateBasedGame game) throws SlickException {
-		enemy = EnemyParty.getInstance();
-		user = UserParty.getInstance();
-		user.get(0).setLevel(5);
+		user.get(0).setLevel(6);
+		enemy.clear();
 		try {
 			user.evolvePoke();
 		} catch (NumberFormatException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
 		user.fullHeal();
-		enemyPokeTest = list.get(21);
-		enemy.setWild(true);
-		enemy.add(enemyPokeTest);
-		user.add(list.get(29));
-		user.add(list.get(3));
-		pokeTest = user.get(0);
+
 	}
 	
 	@Override
@@ -78,12 +72,20 @@ public class Overworld implements GameState {
 		} catch (SlickException | NumberFormatException | FileNotFoundException e) {
 				e.printStackTrace();
 		}
+		enemy = EnemyParty.getInstance();
+		user = UserParty.getInstance();
+		
+		
+		enemy.setWild(false);
+		enemy.add(enemyPokeTest);
 		//UserParty.getInstance().addNewPikumen(list.get(12));
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int millis) throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_R)){
+			enemy.add(list.get((int)(Math.random() * 30)));
+			enemy.add(list.get((int)(Math.random() * 30)));
 			gc.getInput().clearKeyPressedRecord();
 			game.enterState(3, new FadeOutTransition(), new FadeInTransition());
 		}
