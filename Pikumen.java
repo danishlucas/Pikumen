@@ -88,7 +88,7 @@ public class Pikumen {
 		if (index == 22){
 			return new punctuation();
 		}
-		return list.get(index);
+		return list.get(index + 1);
 	}
 	
 	public void setLevel(int level){
@@ -168,12 +168,12 @@ public class Pikumen {
 	
 	public void fullHeal() {
 		setMaxHp();
-		currHp = maxHp;
+		currHp = (int)(level * hpPLvl + startHp);
 	}
 	
 	
 	public ArrayList<String> executeAttack(int moveNum, Pikumen target, int which) { //moveNum: 0 = basic, 1 = statRaise, 2 = statLower, 3 = special
-										//which = int user or opponent pokemon, 0 = user, 1= opponent
+		//which = int user or opponent pokemon, 0 = user, 1= opponent
 		Move attack = moves[moveNum];
 		ArrayList<String> effects = new ArrayList<String>();
 		String oppOrUse = "";
@@ -187,7 +187,7 @@ public class Pikumen {
 			if (.85 >= rando){
 				float mult = 1;
 				if ((((AttackMove) attack).getType() == 2 && target.getType() == 3) || ((AttackMove) attack).getType() == 3 && target.getType() == 4	
-					|| (((AttackMove) attack).getType() == 4 && target.getType() == 2)) {
+						|| (((AttackMove) attack).getType() == 4 && target.getType() == 2)) {
 					mult *= 2;			
 					effects.add("It's super effective! Nice decision bucko!");
 				}
@@ -200,15 +200,15 @@ public class Pikumen {
 				if (Math.random() <= 0.1) {
 					mult *= 1.5;
 					effects.add("Yes! A critical hit!");
-			}
-				int damage = ((int) (((AttackMove) attack).getDmg() * mult * this.getTempAtk() / target.getTempDef()));
+				}
+				int damage = ((int) (((AttackMove) attack).getDmg() * mult * this.getTempAtk() / target.getTempDef() * 0.75));
 				if (damage == 0)
 					damage = 1;
 				target.updateHp(damage);
-		}
+			}
 			else  
 				effects.add("The attack missed");
-			
+
 		}
 		else if(attack instanceof StatRaiseMove){
 			int stat = ((StatRaiseMove) attack).getStat();
@@ -278,9 +278,9 @@ public class Pikumen {
 			}
 		}
 		attack.reducePp();
-		if(which == 0)
-			oppOrUse = "User";
 		if(which == 1)
+			oppOrUse = "User";
+		if(which == 0)
 			oppOrUse = "Opponent";
 		if (target.defeated())
 			effects.add(oppOrUse + "'s " + target.getName() + " fainted");
@@ -300,6 +300,8 @@ public class Pikumen {
 		int toNext = 5 * level;
 		while(exp >= toNext) {
 			level++;
+			resetStats();
+			setMaxHp();
 			exp -= toNext;
 			toNext+=5;
 		}
