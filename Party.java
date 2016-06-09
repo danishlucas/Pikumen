@@ -27,7 +27,7 @@ public class Party {
 	
 	public void add(Pikumen poke) {
 		int location = 0;
-		while(pokes[location] != null && location < 6) {
+		while(pokes[location] != null && location != 6) {
 			location++;
 		}
 		if(location == 6){								// No room in party? add to Pc
@@ -50,19 +50,30 @@ public class Party {
 	}
 		
 	public boolean defeated(){
-		for (int i = 0; i < pokes.length; i++) {
-			if (!(pokes[i] == null && pokes[i].defeated()))
-				return false;
+		boolean checker = true;
+		for (int i = 0; i < pokes.length; i++) {		// fix this method
+			if (!(pokes[i] == null || pokes[i].defeated()))
+				checker = false;
 		}
-		return true;
+		return checker;
+	}
+	
+	public void fullHeal() {
+		for (int i = 0; i < 6; i++){
+			if (pokes[i] != null) {
+				pokes[i].fullHeal();
+			}
+		}
 	}
 	
 	public void evolvePoke() throws NumberFormatException, FileNotFoundException, SlickException{
 		for (int i = 0; i < 6; i++){
-			if(pokes[i].readyToEvo()){
+			if(pokes[i] != null && pokes[i].readyToEvo()){
 				Pikumen newPoke = pokes[i].evoTarget();
 				String nickname = pokes[i].getNickname();
 				newPoke.setNickName(nickname);
+				newPoke.resetStats();
+				newPoke.setLevel(pokes[i].getLevel());
 				this.remove(i);
 				this.add(newPoke);
 			}
@@ -73,6 +84,7 @@ public class Party {
 	public void remove(int location) {
 		pokes[location] = null;
 	}
+	
 	
 	
 }

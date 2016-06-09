@@ -54,8 +54,4 @@ public class UserParty  extends Party{
 		add(newPoke);
 		return;
 	}
-		   
-		   
-		   
-		   
-		}
+}

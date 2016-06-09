@@ -45,11 +45,19 @@ public class Overworld implements GameState {
 	@Override
 	public void enter(GameContainer gc, StateBasedGame game) throws SlickException {
 		enemy = EnemyParty.getInstance();
-		enemyPokeTest = list.get(0);
-		enemy.setWild(false);
-		enemy.add(enemyPokeTest);
 		user = UserParty.getInstance();
-		user.add(list.get(7));
+		user.get(0).setLevel(5);
+		try {
+			user.evolvePoke();
+		} catch (NumberFormatException | FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		user.fullHeal();
+		enemyPokeTest = list.get(21);
+		enemy.setWild(true);
+		enemy.add(enemyPokeTest);
+		user.add(list.get(29));
+		user.add(list.get(3));
 		pokeTest = user.get(0);
 	}
 	

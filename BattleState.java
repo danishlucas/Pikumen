@@ -32,6 +32,7 @@ public class BattleState implements GameState {
 	private Image darrow;
 	private Image uarrow;
 	private Image rarrow;
+	private Image pikuball;
 	
 	@Override
 	public void keyReleased(int key, char c) {
@@ -67,6 +68,7 @@ public class BattleState implements GameState {
 			darrow = new Image("PikumenPics/arrowD.png");
 			rarrow = new Image("PikumenPics/arrowR.png");
 			uarrow = new Image("PikumenPics/arrowU.png");
+			pikuball = new Image("PikumenPics/pikuball.png");
 		} catch (SlickException | NumberFormatException | FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,14 +91,17 @@ public class BattleState implements GameState {
 			g.setColor(Color.white);
 			g.fillRect(0, 0, 620, 500);
 			g.setColor(Color.black);
-			g.drawRect(400, 280, 200, 60);
+			g.drawRect(400, 280, 210, 60);
 			g.drawRect(20, 70, 200, 60);
 			g.setColor(new Color(0.85f, 0.85f, 0.95f));
 			g.fillRect(0, 350, 620, 150);
-			g.fillRect(401, 281, 199, 59);
+			g.fillRect(401, 281, 209, 59);
 			g.fillRect(21, 71, 199, 59);
-			user.get(0).drawImage(100, 250);
-			enemy.get(0).drawImage(370, 60);
+			//g.drawString("" + user.get(0).defeated(), 50, 300);
+			if (!user.get(0).defeated())
+				user.get(0).drawImage(100, 250);
+			if (!enemy.get(0).defeated() && !pointInTurn.equals("pikumenCaught"))
+				enemy.get(0).drawImage(370, 60);
 			g.setColor(Color.black);
 			g.drawString(enemy.get(0).getCurrHp() + " / " + enemy.get(0).getHp() + "HP", 125, 100);
 			g.drawString(user.get(0).getCurrHp() + " / " + user.get(0).getHp() + "HP", 505, 310);
@@ -145,15 +150,29 @@ public class BattleState implements GameState {
 				g.drawString("" + user.get(0).getMove(1).getName(), 208, 422);
 				rarrow.draw(300, 418);
 				g.drawString("" + user.get(0).getMove(2).getName(), 355, 422);
+				g.setColor(new Color(0.78f, 0.36f, 0.34f));
+				g.fillRect(9, 369, 154, 37);
+				g.setColor(Color.black);
+				g.drawString("Press \"Backspace\"", 10, 370);
+				g.drawString("to go back", 12, 385);
+				g.drawRect(8, 368, 155, 37);
 			}
 			
 			
 			
-			if ((pointInTurn.equals("calculatingAttack1E") || pointInTurn.equals("calculatingAttack1U") || pointInTurn.equals("calculatingAttack2U")
-			|| pointInTurn.equals("calculatingAttack2E") || pointInTurn.equals("throwBallT") || pointInTurn.equals("throwBallW") || pointInTurn.equals("fleeingT") 
-			|| pointInTurn.equals("pikumenCaught") || pointInTurn.equals("pikumenEscape")) && (fx.size() > 0) ){ 
+			if ((pointInTurn.equals("calculatingAttack1E") || pointInTurn.equals("calculatingAttack1U")
+			|| pointInTurn.equals("calculatingAttack2U")|| pointInTurn.equals("calculatingAttack2E") 
+			|| pointInTurn.equals("throwBallT") || pointInTurn.equals("throwBallW") || pointInTurn.equals("actuallyRunning")
+			|| pointInTurn.equals("pikumenCaught") || pointInTurn.equals("pikumenEscape") || pointInTurn.equals("swappingU") 
+			|| pointInTurn.equals("userDefeated0")) && (fx.size() > 0)  && effectNum != fx.size()){ 
 				g.drawString(fx.get(effectNum), 50, 450);
 				g.drawString("*Press enter to continue*", 50, 375);
+				if (pointInTurn.equals("pikumenCaught")){
+					g.setColor(Color.white);
+					g.drawRect(370, 60, 110, 110); // draw rect over enemy image, then draw image
+					pikuball.draw(390, 80);
+					
+				}
 			}
 
 	}
@@ -170,6 +189,7 @@ public class BattleState implements GameState {
 			else if(gc.getInput().isKeyPressed(Input.KEY_DOWN))
 				pointInTurn = "fleeing";
 		}
+		
 		if(pointInTurn.equals("chooseAttack")){
 			if (gc.getInput().isKeyPressed(Input.KEY_UP)) { // upgrade to actually use battle
 				attackChosen = 0;
@@ -187,10 +207,14 @@ public class BattleState implements GameState {
 				attackChosen = 3;
 				pointInTurn = "calculatingAttack1";
 			}
+			
+			else if (gc.getInput().isKeyPressed(Input.KEY_BACK))
+				pointInTurn = "chooseMenu";
 				//fx = user.get(0).executeAttack(3, enemy.get(0));
 			
 		}
 		if (pointInTurn.equals("calculatingAttack1")){
+			fx.clear();
 			int userSpd = user.get(0).getTempSpd();
 			int enemySpd = enemy.get(0).getTempSpd();
 			if (userSpd > enemySpd || (userSpd == enemySpd && Math.random() > 0.5)){
@@ -209,22 +233,27 @@ public class BattleState implements GameState {
 			}
 			if (effectNum == fx.size()){
 				if (pointInTurn.equals("calculatingAttack1U")) {
-					pointInTurn = "calculatingAttack2E";
-					fx.clear();;
+					fx.clear();
 					effectNum = 0;
+					pointInTurn = "calculatingAttack2E";
+
 					
 				}
 				if (effectNum >= fx.size() && pointInTurn.equals("calculatingAttack1E")) {
-					pointInTurn = "calculatingAttack2U";
 					fx.clear();
 					effectNum = 0;
+					pointInTurn = "calculatingAttack2U";
+
 				}
 			}
 		}
 		
+
+		
 		if(pointInTurn.equals("calculatingAttack2U") && !user.get(0).defeated() && !enemy.get(0).defeated()){
 			if (!executed) {
 				fx = user.get(0).executeAttack(attackChosen, enemy.get(0), 0);
+	
 				executed = true;
 				gc.getInput().clearKeyPressedRecord();
 				effectNum = 0;
@@ -241,11 +270,12 @@ public class BattleState implements GameState {
 				pointInTurn = "chooseMenu";
 			}
 			else if (effectNum == fx.size() && (user.get(0).defeated() || enemy.get(0).defeated())){
-				//basically switch a poke out
+				if (user.get(0).defeated())
+					pointInTurn = "userDefeated0";
 			}
 		}
 		
-		if(pointInTurn.equals("calculatingAttack2E") && !user.get(0).defeated() && !enemy.get(0).defeated()){
+		if(pointInTurn.equals("calculatingAttack2E") && !enemy.get(0).defeated()){
 			if (!executed) {
 				fx.clear();
 				fx = enemy.get(0).executeAttack((int) (Math.random() * 4), user.get(0), 1);
@@ -264,9 +294,47 @@ public class BattleState implements GameState {
 				executed = false;
 				effectNum = 0;
 			}	
+		}
+		
+		if((pointInTurn.equals("calculatingAttack2E") || pointInTurn.equals("calculatingAttack2U") || pointInTurn.equals("calclatingAttack1") 
+				|| pointInTurn.equals("chooseMenu")) && user.get(0).defeated()) {	
+			pointInTurn = "userDefeated0";
+		}
 				
-		if (user.get(0).defeated()){ // not perfect yet
-			System.out.println("checkers");
+		if (pointInTurn.equals("userDefeated0")){ // not perfect yet
+			if (!executed) {
+				fx.clear();
+				effectNum = 0;
+				executed = true;
+			}
+			if(gc.getInput().isKeyPressed(Input.KEY_ENTER) && effectNum < fx.size()){
+				effectNum++;
+				gc.getInput().clearKeyPressedRecord();
+			}
+			int i = 1;
+			if (!user.defeated() && user.get(0).defeated()){
+				while (user.get(0).defeated()){	// so we aint displaying the battle effects for roadking // displaying for milli
+					user.switchOrder(0, i);
+					i++;
+				}
+				fx.add("Go " + user.get(0).getName() + "!");
+				// we should probably make this a choice...
+			}
+
+			if (effectNum == fx.size()){
+				executed = false;
+				fx.clear();
+				effectNum = 0;
+				pointInTurn = "swappingU";
+			}
+
+		}
+		
+		if (pointInTurn.equals("swappingU")){
+			if (gc.getInput().isKeyPressed(Input.KEY_ENTER) && effectNum < fx.size()) {
+				System.out.println("we here now");
+				effectNum++;
+			}
 			if (user.defeated()) {
 				fx.clear();
 				gc.getInput().clearKeyPressedRecord();
@@ -274,29 +342,72 @@ public class BattleState implements GameState {
 				game.enterState(0, new FadeOutTransition(), new FadeInTransition());
 				return;
 			}
+			pointInTurn = "chooseMenu";	
+		}	
+		
+		if((pointInTurn.equals("calculatingAttack2U") || pointInTurn.equals("calculatingAttack2U") || pointInTurn.equals("calclatingAttack1") 
+				|| pointInTurn.equals("chooseMenu")) && enemy.get(0).defeated()) {	
+			pointInTurn = "enemyDefeated0";
+		}
+		
+		
+		if (pointInTurn.equals("enemyDefeated0")){ // not perfect yet
+			if (!executed) {
+				fx.clear();
+				effectNum = 0;
+				executed = true;
+			}
+			if(gc.getInput().isKeyPressed(Input.KEY_ENTER) && effectNum < fx.size()){
+				effectNum++;
+				gc.getInput().clearKeyPressedRecord();
+			}
 			int i = 1;
-			while (user.get(0).defeated()){
-				user.switchOrder(0, i);
-				i++;
+			if (!enemy.defeated() && enemy.get(0).defeated()){
+				while (enemy.get(0).defeated()){	// so we aint displaying the battle effects for roadking // displaying for milli
+					enemy.switchOrder(0, i);
+					i++;
+				}
+				fx.add("Your opponent sent out " + user.get(0).getName() + "!");
 				// we should probably make this a choice...
 			}
-			fx.clear();
-			pointInTurn = "swappingU";
+
+			if (effectNum == fx.size()){
+				executed = false;
+				fx.clear();
+				effectNum = 0;
+				pointInTurn = "swappingE";
 			}
+
+		}
 		
-			if (pointInTurn.equals("swappingU")){
-				if (gc.getInput().isKeyPressed(Input.KEY_ENTER)) {
-					pointInTurn = "chooseMenu";
-				}
+		if (pointInTurn.equals("swappingE")){			//so whats goin on is when he dies he doesnt swtich out
+			if (gc.getInput().isKeyPressed(Input.KEY_ENTER) && effectNum < fx.size()) {
+				System.out.println("we here now");
+				effectNum++;
 			}
+			if (user.defeated()) {
+				fx.clear();
+				gc.getInput().clearKeyPressedRecord();
+				effectNum = 0;
+				game.enterState(0, new FadeOutTransition(), new FadeInTransition());
+				return;
+			}
+			pointInTurn = "chooseMenu";	
 		}	
+		
+		
+		
+		
+		
 		if(pointInTurn.equals("throwBall")){//assumes neither pikumen is defeated	
 			fx.clear();
 				if(!enemy.wild()){
+					System.out.println("Bootay1");
 					fx.add("Cannot catch an opponents Pikumen");
 					pointInTurn = "throwBallT"; // T for trainer
 				}
 				else if (enemy.wild()){
+					System.out.println("Bootay2");
 					fx.add("You threw a Pikuball");
 					pointInTurn = "throwBallW";
 				}
@@ -304,10 +415,10 @@ public class BattleState implements GameState {
 					
 					
 		if (pointInTurn.equals("throwBallT")){		
-			if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
-				pointInTurn = "chooseMenu";
-				fx.clear();
-			}
+				if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+					pointInTurn = "chooseMenu";
+					fx.clear();
+				}
 					
 		}
 			
@@ -361,27 +472,28 @@ public class BattleState implements GameState {
 
 			}
 		}
-			
-		if(pointInTurn.equals("fleeing")){
-			if (!enemy.wild()){
-				fx.add("You can't run from a trainer!");
-				pointInTurn = "fleeingT";
+			if(pointInTurn.equals("fleeing")){
+				if (!enemy.wild()) {
+					fx.add("You can't run from a trainer!");
+					pointInTurn = "throwBallT";
+				}
+				else if (enemy.wild()){
+					fx.add("You fled in terror of the mighty" + enemy.get(0).getName());
+					pointInTurn = "actuallyRunning";
+				}
+				
 			}
-			else
-				game.enterState(2, new FadeOutTransition(), new FadeInTransition());
-		}
 			
-		if(pointInTurn.equals("fleeingT")){
-			if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
-				pointInTurn = "chooseMenu";
-				fx.clear();
+			if (pointInTurn.equals("actuallyRunning")){
+				if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+					game.enterState(2, new FadeOutTransition(), new FadeInTransition());
+				}
 			}
-		}
 		
 		
 
 			
-	}
+		}
 		
 		
 		
@@ -539,4 +651,3 @@ public class BattleState implements GameState {
 
 
 }
-
