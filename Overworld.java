@@ -44,6 +44,18 @@ public class Overworld implements GameState {
 		g.drawString("Battle wild Pikumen", 70, 320);
 		g.drawString("Battle trainer", 70, 380);
 		g.drawString("Battle area boss", 70, 440);
+		if (currentArea == 0)
+			g.drawString(" (Lesser Fool Noah)" , 220, 440);
+		if (currentArea == 1)
+			g.drawString(" (Greater Fool Daniel)", 220, 440);
+		if (currentArea == 2)
+			g.drawString(" (Dank memer Dane)", 220, 440);
+		if (currentArea == 3)
+			g.drawString(" ( Sneaky Snek Sean)", 220, 440);
+		if (currentArea == 4)
+			g.drawString(" (Grand Poobah Bean)", 220, 440);
+		if (currentArea == 5)
+			g.drawString(" (Lord of the Code Bergquist)", 220, 440);
 		if (currentArea > 0) {
 			g.drawImage(larrow, 0, 10);
 			g.drawString("To area " + (currentArea - 1), 0, 80);
@@ -220,33 +232,15 @@ public class Overworld implements GameState {
 						enemy.add(list.get(27));
 					enemy.get(0).setLevel(7);
 				}
-				if (currentArea == 4){ //hahahaahah no
-					int rando = (int)(Math.random() * 12);
-					if(rando == 0)
-						enemy.add(list.get(3));
-					if(rando == 1)
-						enemy.add(list.get(6));
-					if(rando == 2)
-						enemy.add(list.get(11));
-					if(rando == 3)
-						enemy.add(list.get(13));
-					if(rando == 4)
-						enemy.add(list.get(15));
-					if(rando == 5)
-						enemy.add(list.get(17));
-					if(rando == 6)
-						enemy.add(list.get(20));
-					if(rando == 7)
-						enemy.add(list.get(22));
-					if(rando == 8)
-						enemy.add(list.get(24));
-					if(rando == 9)
-						enemy.add(list.get(1));
-					if(rando == 10)
-						enemy.add(list.get(9));
-					if(rando == 11)
-						enemy.add(list.get(27));
-					enemy.get(0).setLevel(7);
+				if (currentArea == 4){ 
+					int rando = (int)(Math.random() * 30);
+					enemy.add(list.get(rando));
+					enemy.get(0).setLevel(10);
+				}
+				if (currentArea == 5){ 
+					int rando = (int)(Math.random() * 30);
+					enemy.add(list.get(rando));
+					enemy.get(0).setLevel(13);
 				}
 				enemy.fullHeal();
 				for (int i = 0; i < 6; i++) {
@@ -432,7 +426,7 @@ public class Overworld implements GameState {
 				if (user.getMaxArea() == currentArea)
 					enemy.isBoss(true);
 				enemy.setWild(false);
-				if (currentArea == 0){
+				if (currentArea == 0){ //lesser fool Noah
 					enemy.add(list.get(0));
 					enemy.add(list.get(26));
 					enemy.add(list.get(8));
@@ -440,7 +434,7 @@ public class Overworld implements GameState {
 					enemy.get(1).setLevel(3);
 					enemy.get(2).setLevel(3);
 				}
-				if (currentArea == 1){
+				if (currentArea == 1){ // Greater fool daniel
 					enemy.add(list.get(8));
 					enemy.add(list.get(19));
 					enemy.add(list.get(17));
@@ -448,37 +442,41 @@ public class Overworld implements GameState {
 					enemy.get(1).setLevel(5);
 					enemy.get(2).setLevel(5);
 				}
-				if (currentArea == 2){
-					enemy.add(list.get(19));
-					enemy.add(list.get(13));
-					enemy.add(list.get(15));
-					enemy.get(0).setLevel(6);
+				if (currentArea == 2){ //dan
+					enemy.add(list.get(10));
+					enemy.add(list.get(24));
+					enemy.add(list.get(6));
+					enemy.get(0).setLevel(7);
 					enemy.get(1).setLevel(7);
 					enemy.get(2).setLevel(7);
 				}
-				if (currentArea == 3){
-					enemy.add(list.get(3));
-					enemy.add(list.get(27));
-					enemy.add(list.get(29));
+				if (currentArea == 3){ //seeeeen
+					enemy.add(list.get(13));
+					enemy.add(list.get(17));
+					enemy.add(list.get(22));
 					enemy.get(0).setLevel(8);
 					enemy.get(1).setLevel(9);
 					enemy.get(2).setLevel(8);
 				}
-				if (currentArea == 4) {
-					enemy.add(list.get(22));
-					enemy.add(list.get(25));
-					enemy.add(list.get(16));
+				if (currentArea == 4) { // bean
+					enemy.add(list.get(4));
+					enemy.add(list.get(12));
+					enemy.add(list.get(2));
 					enemy.get(0).setLevel(10);
 					enemy.get(1).setLevel(11);
 					enemy.get(2).setLevel(11);
 				}
-				if (currentArea == 5){
+				if (currentArea == 5){ //yung berg
 					enemy.add(list.get(14));
-					enemy.add(list.get(28));
-					enemy.add(new punctuation());
+					enemy.add(list.get(16));
+					enemy.add(list.get(10));
+					enemy.add(list.get(25));
+					enemy.add(list.get(29));
 					enemy.get(0).setLevel(15);
 					enemy.get(1).setLevel(15);
 					enemy.get(2).setLevel(15);
+					enemy.get(3).setLevel(15);
+					enemy.get(4).setLevel(15);
 				}
 				enemy.fullHeal();
 				for (int i = 0; i < 6; i++) {
@@ -487,21 +485,6 @@ public class Overworld implements GameState {
 				}
 				game.enterState(3, new FadeOutTransition(), new FadeInTransition());
 			}
-		}
-		
-		
-		
-		
-		
-		
-		if (gc.getInput().isKeyPressed(Input.KEY_P)){
-			user.add(list.get(12));
-			user.add(list.get(15));
-			user.add(list.get(1));
-			user.add(list.get(2));
-			user.add(list.get(3));
-			user.setPartyStatus(2);
-			game.enterState(4, new FadeOutTransition(), new FadeInTransition());
 		}
 		
 		

@@ -39,8 +39,13 @@ public class PartyState implements GameState {
 		g.drawString("Lv. " + user.get(0).getLevel(), 210, 80);
 		g.drawString(user.get(0).getName(), 110, 80);
 		g.drawRect(110, 100, 90, 12);
-		g.setColor(Color.green);
-		g.fillRect(111, 101, 89, 11);
+		if (user.get(0).getCurrHp() > user.get(0).getHp() / 2)
+			g.setColor(Color.green);
+		if(user.get(0).getCurrHp() < user.get(0).getHp() / 4)
+			g.setColor(Color.red);
+		if((user.get(0).getCurrHp() > user.get(0).getHp() / 4) && (user.get(0).getCurrHp() <= user.get(0).getHp() / 2))
+			g.setColor(Color.yellow);
+		g.fillRect(111, 101, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
 		if (user.get(1) != null){
 			user.get(1).drawImage(315, 50);
 			g.setColor(Color.white);
@@ -49,8 +54,13 @@ public class PartyState implements GameState {
 			g.drawString("Lv. " + user.get(1).getLevel(), 515, 80);
 			g.drawString(user.get(1).getName(), 415, 80);
 			g.drawRect(415, 100, 90, 12);
-			g.setColor(Color.green);
-			g.fillRect(416, 101, 89, 11);
+			if (user.get(1).getCurrHp() > user.get(1).getHp() / 2)
+				g.setColor(Color.green);
+			if(user.get(1).getCurrHp() < user.get(1).getHp() / 4)
+				g.setColor(Color.red);
+			if((user.get(1).getCurrHp() > user.get(1).getHp() / 4) && (user.get(1).getCurrHp() <= user.get(1).getHp() / 2))
+				g.setColor(Color.yellow);
+			g.fillRect(416, 101, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
 		}
 		if (user.get(2) != null){
 			user.get(2).drawImage(10, 200);
@@ -60,8 +70,13 @@ public class PartyState implements GameState {
 			g.drawString("Lv. " + user.get(2).getLevel(), 210, 230);
 			g.drawString(user.get(2).getName(), 110, 230);
 			g.drawRect(110, 250, 90, 12);
-			g.setColor(Color.green);
-			g.fillRect(111, 251, 89, 11);
+			if (user.get(2).getCurrHp() > user.get(2).getHp() / 2)
+				g.setColor(Color.green);
+			if(user.get(2).getCurrHp() < user.get(2).getHp() / 4)
+				g.setColor(Color.red);
+			if((user.get(2).getCurrHp() > user.get(2).getHp() / 4) && (user.get(2).getCurrHp() <= user.get(2).getHp() / 2))
+				g.setColor(Color.yellow);
+			g.fillRect(111, 251, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
 		}
 		if (user.get(3) != null){
 			g.setColor(Color.white);
@@ -71,8 +86,13 @@ public class PartyState implements GameState {
 			g.drawString("Lv. " + user.get(3).getLevel(), 515, 230);
 			g.drawString(user.get(3).getName(), 415, 230);
 			g.drawRect(415, 250, 90, 12);
-			g.setColor(Color.green);
-			g.fillRect(416, 251, 89, 11);
+			if (user.get(3).getCurrHp() > user.get(3).getHp() / 2)
+				g.setColor(Color.green);
+			if(user.get(3).getCurrHp() < user.get(3).getHp() / 4)
+				g.setColor(Color.red);
+			if((user.get(3).getCurrHp() > user.get(3).getHp() / 4) && (user.get(3).getCurrHp() <= user.get(3).getHp() / 2))
+				g.setColor(Color.yellow);
+			g.fillRect(416, 251, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
 		}
 		if (user.get(4) != null){
 			g.setColor(Color.white);
@@ -82,8 +102,13 @@ public class PartyState implements GameState {
 			g.drawString("Lv. " + user.get(4).getLevel(), 210, 380);
 			g.drawString(user.get(4).getName(), 110, 380);
 			g.drawRect(110, 400, 90, 12);
-			g.setColor(Color.green);
-			g.fillRect(111, 401, 89, 11);
+			if (user.get(4).getCurrHp() > user.get(4).getHp() / 2)
+				g.setColor(Color.green);
+			if(user.get(4).getCurrHp() < user.get(4).getHp() / 4)
+				g.setColor(Color.red);
+			if((user.get(4).getCurrHp() > user.get(4).getHp() / 4) && (user.get(4).getCurrHp() <= user.get(4).getHp() / 2))
+				g.setColor(Color.yellow);
+			g.fillRect(111, 401, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
 		}
 		if (user.get(5) != null){
 			g.setColor(Color.white);
@@ -93,8 +118,13 @@ public class PartyState implements GameState {
 			g.drawString("Lv. " + user.get(5).getLevel(), 515, 380);
 			g.drawString(user.get(5).getName(), 415, 380);
 			g.drawRect(415, 400, 90, 12);
-			g.setColor(Color.green);
-			g.fillRect(416, 401, 89, 11);
+			if (user.get(5).getCurrHp() > user.get(5).getHp() / 2)
+				g.setColor(Color.green);
+			if(user.get(5).getCurrHp() < user.get(5).getHp() / 4)
+				g.setColor(Color.red);
+			if((user.get(5).getCurrHp() > user.get(5).getHp() / 4) && (user.get(5).getCurrHp() <= user.get(5).getHp() / 2))
+				g.setColor(Color.yellow);
+			g.fillRect(416, 401, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
 		}
 		g.setColor(new Color(0.78f, 0.36f, 0.34f));
 		g.fillRect(466, 463, 154, 38);
