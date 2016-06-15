@@ -27,12 +27,33 @@ public class Overworld implements GameState {
 	private Pikumen enemyPokeTest;
 	private UserParty user;
 	private EnemyParty enemy;
+	private int selected;
+	private int currentArea;
+	private Image larrow;
+	private Image rarrow;
 	
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame PikumenGame, Graphics g) throws SlickException {
 		g.setColor(Color.white);
-		playerImg.draw(200,400);
+		g.drawString("Press enter to select", 197, 100);
+		g.drawString("Press arrow keys to navigate menu", 155, 120);
+		g.drawString("Area " + currentArea, 273, 35);
+		g.drawString("Adjust party", 70, 200);
+		g.drawString("Access storage", 70, 260);
+		g.drawString("Battle wild Pikumen", 70, 320);
+		g.drawString("Battle trainer", 70, 380);
+		g.drawString("Battle area boss", 70, 440);
+		if (currentArea > 0) {
+			g.drawImage(larrow, 0, 10);
+			g.drawString("To area " + (currentArea - 1), 0, 80);
+		}
+		if (currentArea != 5 && currentArea < user.getMaxArea()){
+			g.drawImage(rarrow, 540, 10); 
+			g.drawString("To area " + (currentArea + 1), 535, 80);	
+		}
+		playerImg.draw(0, 180 + selected * 60);
+
 	}
 
 
@@ -43,16 +64,13 @@ public class Overworld implements GameState {
 	
 	@Override
 	public void enter(GameContainer gc, StateBasedGame game) throws SlickException {
-		user.get(0).setLevel(6);
 		enemy.clear();
-		try {
-			user.evolvePoke();
-		} catch (NumberFormatException | FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
 		user.fullHeal();
-
+		for (int i = 0; i < 6; i++){
+			if (user.get(i) != null)
+				user.get(i).resetStats();
+		}
+		selected = 0;
 	}
 	
 	@Override
@@ -63,6 +81,9 @@ public class Overworld implements GameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		playerImg = new Image("PikumenPics/PikumenPlayer.png");	 
+		rarrow = new Image("PikumenPics/white right.png");
+		larrow = new Image("PikumenPics/white left.png");
+		currentArea = 0;
 		this.game = game;
 
 		list = null;
@@ -76,19 +97,418 @@ public class Overworld implements GameState {
 		user = UserParty.getInstance();
 		
 		
-		enemy.setWild(false);
-		enemy.add(enemyPokeTest);
+		enemy.setWild(true);
 		//UserParty.getInstance().addNewPikumen(list.get(12));
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame game, int millis) throws SlickException {
-		if (gc.getInput().isKeyPressed(Input.KEY_R)){
-			enemy.add(list.get((int)(Math.random() * 30)));
-			enemy.add(list.get((int)(Math.random() * 30)));
-			gc.getInput().clearKeyPressedRecord();
-			game.enterState(3, new FadeOutTransition(), new FadeInTransition());
+	public void update(GameContainer gc, StateBasedGame game, int millis) throws SlickException { // final mission: pc, improve stages
+		user.fullHeal();
+		enemy.fullHeal();
+		try {
+			user.evolvePoke();
+		} catch (NumberFormatException | FileNotFoundException e) {
+			e.printStackTrace();
 		}
+		if (currentArea < user.getMaxArea() && gc.getInput().isKeyPressed(Input.KEY_RIGHT)) {
+			currentArea++;
+			gc.getInput().clearKeyPressedRecord();
+		}
+		if (currentArea > 0 && gc.getInput().isKeyPressed(Input.KEY_LEFT)){
+			currentArea--;
+			gc.getInput().clearKeyPressedRecord();
+		}
+		if (gc.getInput().isKeyPressed(Input.KEY_UP) && selected != 0){
+			selected--;
+			gc.getInput().clearKeyPressedRecord();
+			return;
+		}
+		if (gc.getInput().isKeyPressed(Input.KEY_DOWN) && selected != 4) {
+			selected ++;
+			gc.getInput().clearKeyPressedRecord();
+			return;
+		}
+		if (gc.getInput().isKeyPressed(Input.KEY_ENTER)){
+			if (selected == 0) { // party
+				user.setPartyStatus(2);
+				game.enterState(4, new FadeOutTransition(), new FadeInTransition());
+			}
+			if (selected == 1){
+				//enter pc
+			}
+			if (selected == 2){ // battle wild
+				enemy.clear();
+				enemy.setWild(true);
+				enemy.isBoss(false);
+				if (currentArea == 0){
+					int rando = (int)(Math.random() * 4);
+					if(rando == 0)
+						enemy.add(list.get(5));
+					if(rando == 1)
+						enemy.add(list.get(19));
+					if(rando == 2)
+						enemy.add(list.get(user.getNotChosen1()));
+					if (rando == 3)
+						enemy.add(list.get(user.getNotChosen2()));
+					enemy.get(0).setLevel(1);
+				}
+				if (currentArea == 1){
+					int rando = (int)(Math.random() * 4);
+					if(rando == 0)
+						enemy.add(list.get(5));
+					if(rando == 1)
+						enemy.add(list.get(19));
+					if(rando == 2)
+						enemy.add(list.get(user.getNotChosen1()));
+					if (rando == 3)
+						enemy.add(list.get(user.getNotChosen2()));
+					enemy.get(0).setLevel(3);
+				}
+				if (currentArea == 3){
+					int rando = (int)(Math.random() * 12);
+					if(rando == 0)
+						enemy.add(list.get(3));
+					if(rando == 1)
+						enemy.add(list.get(6));
+					if(rando == 2)
+						enemy.add(list.get(11));
+					if(rando == 3)
+						enemy.add(list.get(13));
+					if(rando == 4)
+						enemy.add(list.get(15));
+					if(rando == 5)
+						enemy.add(list.get(17));
+					if(rando == 6)
+						enemy.add(list.get(20));
+					if(rando == 7)
+						enemy.add(list.get(22));
+					if(rando == 8)
+						enemy.add(list.get(24));
+					if(rando == 9)
+						enemy.add(list.get(1));
+					if(rando == 10)
+						enemy.add(list.get(9));
+					if(rando == 11)
+						enemy.add(list.get(27));
+					enemy.get(0).setLevel(5);
+				}
+				if (currentArea == 3){
+					int rando = (int)(Math.random() * 12);
+					if(rando == 0)
+						enemy.add(list.get(3));
+					if(rando == 1)
+						enemy.add(list.get(6));
+					if(rando == 2)
+						enemy.add(list.get(11));
+					if(rando == 3)
+						enemy.add(list.get(13));
+					if(rando == 4)
+						enemy.add(list.get(15));
+					if(rando == 5)
+						enemy.add(list.get(17));
+					if(rando == 6)
+						enemy.add(list.get(20));
+					if(rando == 7)
+						enemy.add(list.get(22));
+					if(rando == 8)
+						enemy.add(list.get(24));
+					if(rando == 9)
+						enemy.add(list.get(1));
+					if(rando == 10)
+						enemy.add(list.get(9));
+					if(rando == 11)
+						enemy.add(list.get(27));
+					enemy.get(0).setLevel(7);
+				}
+				if (currentArea == 4){ //hahahaahah no
+					int rando = (int)(Math.random() * 12);
+					if(rando == 0)
+						enemy.add(list.get(3));
+					if(rando == 1)
+						enemy.add(list.get(6));
+					if(rando == 2)
+						enemy.add(list.get(11));
+					if(rando == 3)
+						enemy.add(list.get(13));
+					if(rando == 4)
+						enemy.add(list.get(15));
+					if(rando == 5)
+						enemy.add(list.get(17));
+					if(rando == 6)
+						enemy.add(list.get(20));
+					if(rando == 7)
+						enemy.add(list.get(22));
+					if(rando == 8)
+						enemy.add(list.get(24));
+					if(rando == 9)
+						enemy.add(list.get(1));
+					if(rando == 10)
+						enemy.add(list.get(9));
+					if(rando == 11)
+						enemy.add(list.get(27));
+					enemy.get(0).setLevel(7);
+				}
+				enemy.fullHeal();
+				for (int i = 0; i < 6; i++) {
+					if (enemy.get(i) != null)
+						enemy.get(i).resetStats();
+				}
+				game.enterState(3, new FadeOutTransition(), new FadeInTransition());
+			}	
+			if (selected == 3) { // battle trainer
+				enemy.isBoss(false);
+				enemy.clear();
+				enemy.setWild(false);
+				if (currentArea == 0) {
+					int rando = (int)(Math.random() * 5);
+					if(rando == 0)
+						enemy.add(list.get(5));
+					if(rando == 1)
+						enemy.add(list.get(19));
+					if(rando == 2)
+						enemy.add(list.get(0));
+					if (rando == 3)
+						enemy.add(list.get(26));
+					if (rando == 4)
+						enemy.add(list.get(8));
+					rando = (int)(Math.random() * 5);
+					if(rando == 0)
+						enemy.add(list.get(5));
+					if(rando == 1)
+						enemy.add(list.get(19));
+					if(rando == 2)
+						enemy.add(list.get(0));
+					if (rando == 3)
+						enemy.add(list.get(26));
+					if (rando == 4)
+						enemy.add(list.get(8));
+					enemy.get(0).setLevel(2);
+					enemy.get(1).setLevel(2);
+				}
+				if (currentArea == 1) {
+					int rando = (int)(Math.random() * 5);
+					if(rando == 0)
+						enemy.add(list.get(5));
+					if(rando == 1)
+						enemy.add(list.get(19));
+					if(rando == 2)
+						enemy.add(list.get(0));
+					if (rando == 3)
+						enemy.add(list.get(26));
+					if (rando == 4)
+						enemy.add(list.get(8));
+					rando = (int)(Math.random() * 5);
+					if(rando == 0)
+						enemy.add(list.get(5));
+					if(rando == 1)
+						enemy.add(list.get(19));
+					if(rando == 2)
+						enemy.add(list.get(0));
+					if (rando == 3)
+						enemy.add(list.get(26));
+					if (rando == 4)
+						enemy.add(list.get(8));
+					enemy.get(0).setLevel(4);
+					enemy.get(1).setLevel(4);
+				}
+				if (currentArea == 2){
+					int rando = (int)(Math.random() * 12);
+					if(rando == 0)
+						enemy.add(list.get(3));
+					if(rando == 1)
+						enemy.add(list.get(6));
+					if(rando == 2)
+						enemy.add(list.get(11));
+					if(rando == 3)
+						enemy.add(list.get(13));
+					if(rando == 4)
+						enemy.add(list.get(15));
+					if(rando == 5)
+						enemy.add(list.get(17));
+					if(rando == 6)
+						enemy.add(list.get(20));
+					if(rando == 7)
+						enemy.add(list.get(22));
+					if(rando == 8)
+						enemy.add(list.get(24));
+					if(rando == 9)
+						enemy.add(list.get(1));
+					if(rando == 10)
+						enemy.add(list.get(9));
+					if(rando == 11)
+						enemy.add(list.get(27));
+					enemy.get(0).setLevel(6);
+					rando = (int)(Math.random() * 12);
+					if(rando == 0)
+						enemy.add(list.get(3));
+					if(rando == 1)
+						enemy.add(list.get(6));
+					if(rando == 2)
+						enemy.add(list.get(11));
+					if(rando == 3)
+						enemy.add(list.get(13));
+					if(rando == 4)
+						enemy.add(list.get(15));
+					if(rando == 5)
+						enemy.add(list.get(17));
+					if(rando == 6)
+						enemy.add(list.get(20));
+					if(rando == 7)
+						enemy.add(list.get(22));
+					if(rando == 8)
+						enemy.add(list.get(24));
+					if(rando == 9)
+						enemy.add(list.get(1));
+					if(rando == 10)
+						enemy.add(list.get(9));
+					if(rando == 11)
+						enemy.add(list.get(27));
+					enemy.get(1).setLevel(5);
+				}
+				if (currentArea == 2){
+					int rando = (int)(Math.random() * 12);
+					if(rando == 0)
+						enemy.add(list.get(3));
+					if(rando == 1)
+						enemy.add(list.get(6));
+					if(rando == 2)
+						enemy.add(list.get(11));
+					if(rando == 3)
+						enemy.add(list.get(13));
+					if(rando == 4)
+						enemy.add(list.get(15));
+					if(rando == 5)
+						enemy.add(list.get(17));
+					if(rando == 6)
+						enemy.add(list.get(20));
+					if(rando == 7)
+						enemy.add(list.get(22));
+					if(rando == 8)
+						enemy.add(list.get(24));
+					if(rando == 9)
+						enemy.add(list.get(1));
+					if(rando == 10)
+						enemy.add(list.get(9));
+					if(rando == 11)
+						enemy.add(list.get(27));
+					enemy.get(0).setLevel(8);
+					rando = (int)(Math.random() * 12);
+					if(rando == 0)
+						enemy.add(list.get(3));
+					if(rando == 1)
+						enemy.add(list.get(6));
+					if(rando == 2)
+						enemy.add(list.get(11));
+					if(rando == 3)
+						enemy.add(list.get(13));
+					if(rando == 4)
+						enemy.add(list.get(15));
+					if(rando == 5)
+						enemy.add(list.get(17));
+					if(rando == 6)
+						enemy.add(list.get(20));
+					if(rando == 7)
+						enemy.add(list.get(22));
+					if(rando == 8)
+						enemy.add(list.get(24));
+					if(rando == 9)
+						enemy.add(list.get(1));
+					if(rando == 10)
+						enemy.add(list.get(9));
+					if(rando == 11)
+						enemy.add(list.get(27));
+					enemy.get(1).setLevel(8);
+				}
+				
+				enemy.fullHeal();
+				for (int i = 0; i < 6; i++) {
+					if (enemy.get(i) != null)
+						enemy.get(i).resetStats();
+				}
+				game.enterState(3, new FadeOutTransition(), new FadeInTransition());
+			}
+			if (selected == 4){ // boss fight //need to make sure maxArea increases
+				enemy.clear();
+				if (user.getMaxArea() == currentArea)
+					enemy.isBoss(true);
+				enemy.setWild(false);
+				if (currentArea == 0){
+					enemy.add(list.get(0));
+					enemy.add(list.get(26));
+					enemy.add(list.get(8));
+					enemy.get(0).setLevel(3);
+					enemy.get(1).setLevel(3);
+					enemy.get(2).setLevel(3);
+				}
+				if (currentArea == 1){
+					enemy.add(list.get(8));
+					enemy.add(list.get(19));
+					enemy.add(list.get(17));
+					enemy.get(0).setLevel(4);
+					enemy.get(1).setLevel(5);
+					enemy.get(2).setLevel(5);
+				}
+				if (currentArea == 2){
+					enemy.add(list.get(19));
+					enemy.add(list.get(13));
+					enemy.add(list.get(15));
+					enemy.get(0).setLevel(6);
+					enemy.get(1).setLevel(7);
+					enemy.get(2).setLevel(7);
+				}
+				if (currentArea == 3){
+					enemy.add(list.get(3));
+					enemy.add(list.get(27));
+					enemy.add(list.get(29));
+					enemy.get(0).setLevel(8);
+					enemy.get(1).setLevel(9);
+					enemy.get(2).setLevel(8);
+				}
+				if (currentArea == 4) {
+					enemy.add(list.get(22));
+					enemy.add(list.get(25));
+					enemy.add(list.get(16));
+					enemy.get(0).setLevel(10);
+					enemy.get(1).setLevel(11);
+					enemy.get(2).setLevel(11);
+				}
+				if (currentArea == 5){
+					enemy.add(list.get(14));
+					enemy.add(list.get(28));
+					enemy.add(new punctuation());
+					enemy.get(0).setLevel(15);
+					enemy.get(1).setLevel(15);
+					enemy.get(2).setLevel(15);
+				}
+				enemy.fullHeal();
+				for (int i = 0; i < 6; i++) {
+					if (enemy.get(i) != null)
+						enemy.get(i).resetStats();
+				}
+				game.enterState(3, new FadeOutTransition(), new FadeInTransition());
+			}
+		}
+		
+		
+		
+		
+		
+		
+		if (gc.getInput().isKeyPressed(Input.KEY_P)){
+			user.add(list.get(12));
+			user.add(list.get(15));
+			user.add(list.get(1));
+			user.add(list.get(2));
+			user.add(list.get(3));
+			user.setPartyStatus(2);
+			game.enterState(4, new FadeOutTransition(), new FadeInTransition());
+		}
+		
+		
+		
+		//enemy.add(list.get((int)(Math.random() * 30)));
+		//gc.getInput().clearKeyPressedRecord();
+		//game.enterState(3, new FadeOutTransition(), new FadeInTransition());
 	}
 	
 	

@@ -61,7 +61,9 @@ public class Party {
 	public void fullHeal() {
 		for (int i = 0; i < 6; i++){
 			if (pokes[i] != null) {
+				pokes[i].resetStats();
 				pokes[i].fullHeal();
+				
 			}
 		}
 	}
@@ -87,8 +89,7 @@ public class Party {
 	
 	public void clear(){
 		for (int i = 0; i < 6; i++){
-			if (pokes[i] != null)
-				remove(i);
+			remove(i);
 		}
 	}
 	

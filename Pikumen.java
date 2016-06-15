@@ -112,6 +112,10 @@ public class Pikumen {
 		return level;
 	}
 	
+	public int getExp() {
+		return exp;
+	}
+	
 	public int getHp() {
 		setMaxHp();
 		return maxHp;

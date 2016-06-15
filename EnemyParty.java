@@ -4,6 +4,7 @@ public class EnemyParty  extends Party{
 	private static EnemyParty instance = null;
 	private int num;
 	private boolean wild;
+	private boolean boss;
 	protected EnemyParty(Pc storage) {
 		super(storage);
 		num = 0;
@@ -25,5 +26,13 @@ public class EnemyParty  extends Party{
 		this.wild = wild;
 	}
 	
+	public void isBoss(boolean boss){
+		this.boss = boss;
+	}
 	
+	public boolean getBoss(){
+		return this.boss;
+	}
+	
+
 }
