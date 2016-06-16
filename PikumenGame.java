@@ -33,9 +33,10 @@ public class PikumenGame extends StateBasedGame{
 	   this.addState(new OpeningMenu());
 	   this.addState(new ChooseStarter());
        this.addState(new Overworld());
- //      this.addState(new PartyMenu());
        this.addState(new BattleState());
-       
+       this.addState(new PartyState());
+       this.addState(new PcState());
+       this.addState(new YouDiedState());
    }
    
    public static void main(String[] args) {

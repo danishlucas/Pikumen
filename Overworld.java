@@ -14,10 +14,6 @@ import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.*;
 
-import PikumenList.Pc;
-import PikumenList.PikumenList;
-import PikumenList.UserParty;
-
 public class Overworld implements GameState {
 	private Image playerImg;
 	public static final int OverworldID = 2;
@@ -36,35 +32,49 @@ public class Overworld implements GameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame PikumenGame, Graphics g) throws SlickException {
 		g.setColor(Color.white);
-		g.drawString("Press enter to select", 197, 100);
-		g.drawString("Press arrow keys to navigate menu", 155, 120);
-		g.drawString("Area " + currentArea, 273, 35);
-		g.drawString("Adjust party", 70, 200);
-		g.drawString("Access storage", 70, 260);
-		g.drawString("Battle wild Pikumen", 70, 320);
-		g.drawString("Battle trainer", 70, 380);
-		g.drawString("Battle area boss", 70, 440);
-		if (currentArea == 0)
-			g.drawString(" (Lesser Fool Noah)" , 220, 440);
-		if (currentArea == 1)
-			g.drawString(" (Greater Fool Daniel)", 220, 440);
-		if (currentArea == 2)
-			g.drawString(" (Dank memer Dane)", 220, 440);
-		if (currentArea == 3)
-			g.drawString(" ( Sneaky Snek Sean)", 220, 440);
-		if (currentArea == 4)
-			g.drawString(" (Grand Poobah Bean)", 220, 440);
-		if (currentArea == 5)
-			g.drawString(" (Lord of the Code Bergquist)", 220, 440);
-		if (currentArea > 0) {
-			g.drawImage(larrow, 0, 10);
-			g.drawString("To area " + (currentArea - 1), 0, 80);
+		if (currentArea != 6){
+			g.drawString("Press enter to select", 197, 100);
+			g.drawString("Press arrow keys to navigate menu", 155, 120);
+			g.drawString("Area " + currentArea, 273, 35);
+			g.drawString("Adjust party", 70, 200);
+			g.drawString("Access storage", 70, 260);
+			g.drawString("Battle wild Pikumen", 70, 320);
+			g.drawString("Battle trainer", 70, 380);
+			g.drawString("Battle area boss", 70, 440);
+			if (currentArea == 0)
+				g.drawString(" (Lesser Fool Noah)" , 220, 440);
+			if (currentArea == 1)
+				g.drawString(" (Greater Fool Daniel)", 220, 440);
+			if (currentArea == 2)
+				g.drawString(" (Dank memer Dane)", 220, 440);
+			if (currentArea == 3)
+				g.drawString(" (Sneaky Snek Sean)", 220, 440);
+			if (currentArea == 4)
+				g.drawString(" (Grand Poobah Bean)", 220, 440);
+			if (currentArea == 5)
+				g.drawString(" (Lord of the Code Bergquist)", 220, 440);
+			if (currentArea > 0) {
+				g.drawImage(larrow, 0, 10);
+				g.drawString("To area " + (currentArea - 1), 0, 80);
+			}
+			if (currentArea != 5 && currentArea < user.getMaxArea()){
+				g.drawImage(rarrow, 540, 10); 
+				g.drawString("To area " + (currentArea + 1), 535, 80);	
+			}
+			if (currentArea == 5 && user.getMaxArea() == 6) {
+				g.drawImage(rarrow, 540, 10);
+				g.drawString("To ending", 540, 80);
+			}
+			playerImg.draw(0, 180 + selected * 60);
 		}
-		if (currentArea != 5 && currentArea < user.getMaxArea()){
-			g.drawImage(rarrow, 540, 10); 
-			g.drawString("To area " + (currentArea + 1), 535, 80);	
+		else {
+			g.drawString("Wow, you really did it", 195, 100);
+			g.drawString("You're a real champ, y'know that?", 160, 180);
+			g.drawString("Thanks for setting us free...", 175, 260);
+			g.setColor(Color.yellow);
+			g.drawString("Coded by Bean the Grand Pooba, Sean the Snek, and Dane the dank memer", 1, 450);
+			
 		}
-		playerImg.draw(0, 180 + selected * 60);
 
 	}
 
@@ -78,6 +88,7 @@ public class Overworld implements GameState {
 	public void enter(GameContainer gc, StateBasedGame game) throws SlickException {
 		enemy.clear();
 		user.fullHeal();
+		gc.getInput().clearKeyPressedRecord();
 		for (int i = 0; i < 6; i++){
 			if (user.get(i) != null)
 				user.get(i).resetStats();
@@ -115,7 +126,15 @@ public class Overworld implements GameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int millis) throws SlickException { // final mission: pc, improve stages
+		if (gc.getInput().isKeyPressed(Input.KEY_Q))
+			user.add(list.get(0));
 		user.fullHeal();
+		for(int i = 0; i < 6; i++){
+			if (user.get(i) != null)
+				user.get(i).resetStats();
+		}
+		
+		
 		enemy.fullHeal();
 		try {
 			user.evolvePoke();
@@ -146,7 +165,7 @@ public class Overworld implements GameState {
 				game.enterState(4, new FadeOutTransition(), new FadeInTransition());
 			}
 			if (selected == 1){
-				//enter pc
+				game.enterState(5, new FadeOutTransition(), new FadeInTransition());
 			}
 			if (selected == 2){ // battle wild
 				enemy.clear();
@@ -176,7 +195,7 @@ public class Overworld implements GameState {
 						enemy.add(list.get(user.getNotChosen2()));
 					enemy.get(0).setLevel(3);
 				}
-				if (currentArea == 3){
+				if (currentArea == 2){
 					int rando = (int)(Math.random() * 12);
 					if(rando == 0)
 						enemy.add(list.get(3));
@@ -423,8 +442,10 @@ public class Overworld implements GameState {
 			}
 			if (selected == 4){ // boss fight //need to make sure maxArea increases
 				enemy.clear();
+				enemy.isBoss(false);
 				if (user.getMaxArea() == currentArea)
 					enemy.isBoss(true);
+				 
 				enemy.setWild(false);
 				if (currentArea == 0){ //lesser fool Noah
 					enemy.add(list.get(0));

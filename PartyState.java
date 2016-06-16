@@ -27,6 +27,7 @@ public class PartyState implements GameState {
 	private UserParty user;
 	private int select1;
 	private int select2;
+	private boolean selectCheck;
 	
 
 	@Override
@@ -41,7 +42,7 @@ public class PartyState implements GameState {
 		g.drawRect(110, 100, 90, 12);
 		if (user.get(0).getCurrHp() > user.get(0).getHp() / 2)
 			g.setColor(Color.green);
-		if(user.get(0).getCurrHp() < user.get(0).getHp() / 4)
+		if(user.get(0).getCurrHp() <= user.get(0).getHp() / 4)
 			g.setColor(Color.red);
 		if((user.get(0).getCurrHp() > user.get(0).getHp() / 4) && (user.get(0).getCurrHp() <= user.get(0).getHp() / 2))
 			g.setColor(Color.yellow);
@@ -56,11 +57,11 @@ public class PartyState implements GameState {
 			g.drawRect(415, 100, 90, 12);
 			if (user.get(1).getCurrHp() > user.get(1).getHp() / 2)
 				g.setColor(Color.green);
-			if(user.get(1).getCurrHp() < user.get(1).getHp() / 4)
+			if(user.get(1).getCurrHp() <= user.get(1).getHp() / 4)
 				g.setColor(Color.red);
 			if((user.get(1).getCurrHp() > user.get(1).getHp() / 4) && (user.get(1).getCurrHp() <= user.get(1).getHp() / 2))
 				g.setColor(Color.yellow);
-			g.fillRect(416, 101, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
+			g.fillRect(416, 101, 89* user.get(1).getCurrHp() / user.get(1).getHp(), 11);
 		}
 		if (user.get(2) != null){
 			user.get(2).drawImage(10, 200);
@@ -72,11 +73,11 @@ public class PartyState implements GameState {
 			g.drawRect(110, 250, 90, 12);
 			if (user.get(2).getCurrHp() > user.get(2).getHp() / 2)
 				g.setColor(Color.green);
-			if(user.get(2).getCurrHp() < user.get(2).getHp() / 4)
+			if(user.get(2).getCurrHp() <= user.get(2).getHp() / 4)
 				g.setColor(Color.red);
 			if((user.get(2).getCurrHp() > user.get(2).getHp() / 4) && (user.get(2).getCurrHp() <= user.get(2).getHp() / 2))
 				g.setColor(Color.yellow);
-			g.fillRect(111, 251, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
+			g.fillRect(111, 251, 89* user.get(2).getCurrHp() / user.get(2).getHp(), 11);
 		}
 		if (user.get(3) != null){
 			g.setColor(Color.white);
@@ -88,11 +89,11 @@ public class PartyState implements GameState {
 			g.drawRect(415, 250, 90, 12);
 			if (user.get(3).getCurrHp() > user.get(3).getHp() / 2)
 				g.setColor(Color.green);
-			if(user.get(3).getCurrHp() < user.get(3).getHp() / 4)
+			if(user.get(3).getCurrHp() <= user.get(3).getHp() / 4)
 				g.setColor(Color.red);
 			if((user.get(3).getCurrHp() > user.get(3).getHp() / 4) && (user.get(3).getCurrHp() <= user.get(3).getHp() / 2))
 				g.setColor(Color.yellow);
-			g.fillRect(416, 251, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
+			g.fillRect(416, 251, 89* user.get(3).getCurrHp() / user.get(3).getHp(), 11);
 		}
 		if (user.get(4) != null){
 			g.setColor(Color.white);
@@ -104,11 +105,11 @@ public class PartyState implements GameState {
 			g.drawRect(110, 400, 90, 12);
 			if (user.get(4).getCurrHp() > user.get(4).getHp() / 2)
 				g.setColor(Color.green);
-			if(user.get(4).getCurrHp() < user.get(4).getHp() / 4)
+			if(user.get(4).getCurrHp() <= user.get(4).getHp() / 4)
 				g.setColor(Color.red);
 			if((user.get(4).getCurrHp() > user.get(4).getHp() / 4) && (user.get(4).getCurrHp() <= user.get(4).getHp() / 2))
 				g.setColor(Color.yellow);
-			g.fillRect(111, 401, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
+			g.fillRect(111, 401, 89* user.get(4).getCurrHp() / user.get(4).getHp(), 11);
 		}
 		if (user.get(5) != null){
 			g.setColor(Color.white);
@@ -120,11 +121,11 @@ public class PartyState implements GameState {
 			g.drawRect(415, 400, 90, 12);
 			if (user.get(5).getCurrHp() > user.get(5).getHp() / 2)
 				g.setColor(Color.green);
-			if(user.get(5).getCurrHp() < user.get(5).getHp() / 4)
+			if(user.get(5).getCurrHp() <= user.get(5).getHp() / 4)
 				g.setColor(Color.red);
 			if((user.get(5).getCurrHp() > user.get(5).getHp() / 4) && (user.get(5).getCurrHp() <= user.get(5).getHp() / 2))
 				g.setColor(Color.yellow);
-			g.fillRect(416, 401, 89* user.get(0).getCurrHp() / user.get(0).getHp(), 11);
+			g.fillRect(416, 401, 89* user.get(5).getCurrHp() / user.get(5).getHp(), 11);
 		}
 		g.setColor(new Color(0.78f, 0.36f, 0.34f));
 		g.fillRect(466, 463, 154, 38);
@@ -136,6 +137,8 @@ public class PartyState implements GameState {
 			g.setColor(Color.white);
 			g.drawString("Choice 1: " + select1 , 200, 480);
 		}
+		if (!selectCheck)
+			g.drawString("Please select numbers of Pikumen that exist", 90, 80);
 	}
 
 
@@ -157,6 +160,7 @@ public class PartyState implements GameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
+		selectCheck = true;
 		this.game = game;
 
 		list = null;
@@ -236,12 +240,23 @@ public class PartyState implements GameState {
 			}
 		}
 		else {
-			user.switchOrder(select1, select2);
+			
+			if(select1 < 6 && user.get(select1) != null && !user.get(select1).defeated() && select2 < 6 && user.get(select2) != null && !user.get(select2).defeated()){
+				selectCheck = true;
+				user.switchOrder(select1, select2);
+				user.get(select1).resetStats();
+				user.get(select2).resetStats();
+			}
+			else {
+				selectCheck = false;
+			}
 			select1 = -1;
 			select2 = -1;
+
 			return;
 		}
 		if (gc.getInput().isKeyPressed(Input.KEY_BACK)){
+			gc.getInput().clearKeyPressedRecord();
 			game.enterState(user.getPartyStatus(), new FadeOutTransition(), new FadeInTransition());
 		}
 	}

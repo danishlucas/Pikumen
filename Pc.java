@@ -47,5 +47,9 @@ public class Pc {
 		other.add(temp);
 	}
 	
+	public int getSize(){
+		return pokes.size();
+	}
+	
 	
 }

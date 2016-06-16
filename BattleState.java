@@ -113,10 +113,10 @@ public class BattleState implements GameState {
 				g.fillRect(376, 313, 89, 11);
 				if (user.get(0).getCurrHp() > user.get(0).getHp() / 2)
 					g.setColor(Color.green);
-				if(user.get(0).getCurrHp() < user.get(0).getHp() / 4)
-					g.setColor(Color.red);
 				if((user.get(0).getCurrHp() > user.get(0).getHp() / 4) && (user.get(0).getCurrHp() <= user.get(0).getHp() / 2))
 					g.setColor(Color.yellow);
+				if(user.get(0).getCurrHp() <= user.get(0).getHp() / 4)
+					g.setColor(Color.red);
 				g.fillRect(376, 313, 89 * user.get(0).getCurrHp() / user.get(0).getHp(), 11);
 				
 			}
@@ -134,10 +134,10 @@ public class BattleState implements GameState {
 				
 				if (enemy.get(0).getCurrHp() > enemy.get(0).getHp() / 2)
 					g.setColor(Color.green);
-				if(enemy.get(0).getCurrHp() < enemy.get(0).getHp() / 4)
-					g.setColor(Color.red);
 				if((enemy.get(0).getCurrHp() > enemy.get(0).getHp() / 4) && (enemy.get(0).getCurrHp() <= enemy.get(0).getHp() / 2))
 					g.setColor(Color.yellow);
+				if(enemy.get(0).getCurrHp() <= enemy.get(0).getHp() / 4)
+					g.setColor(Color.red);
 				g.fillRect(27, 103, 89 * enemy.get(0).getCurrHp() / enemy.get(0).getHp(), 11);	
 			}
 			g.setColor(Color.black);
@@ -225,8 +225,7 @@ public class BattleState implements GameState {
 			
 			else if (gc.getInput().isKeyPressed(Input.KEY_BACK))
 				pointInTurn = "chooseMenu";
-				//fx = user.get(0).executeAttack(3, enemy.get(0));
-			
+			gc.getInput().clearKeyPressedRecord();
 		}
 		if (pointInTurn.equals("calculatingAttack1") && !enemy.get(0).defeated() && !user.get(0).defeated()){
 			fx.clear();
@@ -370,7 +369,7 @@ public class BattleState implements GameState {
 				fx.clear();
 				gc.getInput().clearKeyPressedRecord();
 				effectNum = 0;
-				game.enterState(2, new FadeOutTransition(), new FadeInTransition());
+				game.enterState(6, new FadeOutTransition(), new FadeInTransition());
 				return;
 			}
 			pointInTurn = "chooseMenu";	

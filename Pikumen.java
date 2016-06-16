@@ -45,6 +45,7 @@ public class Pikumen {
 	private int spd;
 	private int index;
 	
+	
 	public Pikumen(String name, Image image, int hpPLvl, int atkPLvl, 
 					int defPLvl, int startHp, int startAtk, int startDef, 
 					int spdPLvl, int startSpd, MoveSet startingMoves, int evo, int type, int index) throws SlickException{
@@ -181,10 +182,15 @@ public class Pikumen {
 		Move attack = moves[moveNum];
 		ArrayList<String> effects = new ArrayList<String>();
 		String oppOrUse = "";
-		if(which == 0)
+		String other = "";
+		if(which == 0) {
+			other = "Opponent";
 			oppOrUse = "User";
-		if(which == 1)
+		}
+		if(which == 1) {
+			other = "User";
 			oppOrUse = "Opponent";
+		}
 		effects.add(oppOrUse + "'s " + this.getNickname() + " used " + attack.getName());
 		if (attack instanceof AttackMove){
 			double rando = Math.random();
@@ -205,10 +211,10 @@ public class Pikumen {
 					mult *= 1.5;
 					effects.add("Yes! A critical hit!");
 				}
-				int damage = ((int) (((AttackMove) attack).getDmg() * mult * this.getTempAtk() / target.getTempDef() * .75));
+				int damage = ((int) (((AttackMove) attack).getDmg()  * mult * this.getTempAtk() / target.getTempDef() * .75));
 				if (damage == 0)
 					damage = 1;
-				target.updateHp(damage);
+				target.updateHp((damage));
 			}
 			else  
 				effects.add("The attack missed");
@@ -221,14 +227,14 @@ public class Pikumen {
 			if(which == 1)
 				oppOrUse = "Opponent";
 			if(stat == 2) {
-				if (tempAtk >= getAtk() * 3)
+				if (tempAtk >= getAtk() * 2)
 					effects.add(oppOrUse + "'s " + this.getNickname() + " attack cannot go any higher!");
 				else {
 					raiseTempAtk();
 					effects.add(oppOrUse + "'s " + this.getNickname() + " attack rose!");
 				}
 			} else if(stat == 3) {
-				if (tempDef >= 3 * getDef())
+				if (tempDef >= 2 * getDef())
 					effects.add(oppOrUse + "'s " + this.getNickname() + " defense cannot go any higher!");
 				else {	
 					raiseTempDef();
@@ -238,7 +244,7 @@ public class Pikumen {
 				updateHp( 0 - (getHp() / 4));
 				effects.add(oppOrUse + "'s " + this.getNickname() + " recovered health!");
 			} else {
-				if (tempSpd >= 3 * getSpd())
+				if (tempSpd >= 2 * getSpd())
 					effects.add(oppOrUse + "'s " + this.getNickname() + " speed cannot go any higher!");
 				else {
 					raiseTempSpd();
@@ -255,21 +261,21 @@ public class Pikumen {
 				oppOrUse = "User";
 			if (.85 >= rando){
 				if(stat == 3) {
-					if(tempAtk <= getAtk() / 3)
+					if(target.getTempAtk() <= getAtk() / 2)
 						effects.add(oppOrUse + "'s " + this.getNickname() + " attack cannot go any lower!");
 					else {
 						target.lowerTempAtk();
 						effects.add(oppOrUse + "'s " + target.getNickname() + " attack fell!");
 					}
 				} else if(stat == 4) {
-					if (tempDef <= getDef() / 3)
+					if (target.getTempDef() <= getDef() / 2)
 						effects.add(oppOrUse + "'s " + this.getNickname() + " defense cannot go any lower");
 					else {
 						target.lowerTempDef();
 						effects.add(oppOrUse + "'s " + target.getNickname() + " defense fell!");
 					}
 				} else {
-					if (tempSpd <= getSpd() / 3)
+					if (target.getTempSpd() <= getSpd() / 2)
 						effects.add(oppOrUse + "'s " + this.getNickname() + " speed cannot go any lower");
 					else {
 						target.lowerTempSpd();
@@ -301,7 +307,7 @@ public class Pikumen {
 	
 	public void addExp(int addedExp){ // addedExp = level of defeated poke
 		exp += addedExp;
-		int toNext = 5 * level;
+		int toNext = 4 * level;
 		while(exp >= toNext) {
 			level++;
 			resetStats();
